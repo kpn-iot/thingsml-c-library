@@ -1,0 +1,42 @@
+package(default_visibility = ["//visibility:public"])
+
+load("@rules_cc//cc:defs.bzl", "cc_binary", "cc_library", "cc_test")
+
+cc_binary(
+    name = "app",
+    srcs = ["src/test.cpp"],
+    deps = [":thingsml"]
+)
+
+cc_library(
+    name = "thingsml",
+    srcs = glob(
+        include = [
+            "src/**/*.h",
+            "src/**/*.cpp"
+        ],
+        exclude = [
+        ]
+    ),
+    hdrs = ["src/thingsml.h"]
+)
+
+cc_test(
+    name = "test",
+    srcs = glob(
+        include = [
+            "test/**/*.cpp"
+        ]
+    ),
+    deps = [
+        ":thingsml",
+        "@gtest//:gtest"
+        ,"@gtest//:gtest_main"
+    ]
+)
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["src/**"]),
+)
+
