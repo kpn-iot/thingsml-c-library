@@ -34,11 +34,13 @@
 #include "senml/record/senml_int_record.h"
 #include "senml/record/senml_string_record.h"
 
-#include "senml/actuator/senml_float_actuator.h"
-#include "senml/actuator/senml_string_actuator.h"
-#include "senml/actuator/senml_int_actuator.h"
-#include "senml/actuator/senml_bool_actuator.h"
 #include "senml/actuator/senml_binary_actuator.h"
+#include "senml/actuator/senml_bool_actuator.h"
+#include "senml/actuator/senml_double_actuator.h"
+#include "senml/actuator/senml_float_actuator.h"
+#include "senml/actuator/senml_half_float_actuator.h"
+#include "senml/actuator/senml_int_actuator.h"
+#include "senml/actuator/senml_string_actuator.h"
 
 #include "cbor/cbor.h"
 

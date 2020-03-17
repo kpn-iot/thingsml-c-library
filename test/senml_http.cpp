@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts
+ * Author: Joseph Verburg
  * 
  * tests to check the correct functioning of our http helper.
  * 
@@ -85,6 +85,35 @@ TEST(senml_http, single_device_json)
     EXPECT_EQ(338, len);
     EXPECT_EQ(len, strlen(output));
     EXPECT_STREQ("POST /bla HTTP/1.1\nHost: 1.1.1.1\nContent-Type: application/json\nThings-Message-Token: 5cf81ec14696642db3faf701f281a89a025987738ed3edec4956b45f66680c7b\nContent-Length: 166\n\n[{\"bn\":\"device-name\",\"n\":\"humidity\",\"vd\":\"aG9paG9pAA\"},{\"n\":\"power\",\"vb\":true},{\"n\":\"pressure\",\"v\":1.500000},{\"n\":\"temperature\",\"v\":10},{\"n\":\"breadth\",\"vs\":\"haihai\"}]", output);
+}
+
+
+
+TEST(senml_http, proper_zero_terminate_json)
+{
+    SenMLPack device("device-name");
+
+    SenMLBinaryRecord binrec(SENML_NAME_HUMIDITY);
+    unsigned char data[] = "hoihoi";
+    binrec.set(data, 7);
+
+    SenMLBoolRecord boolrec(SENML_NAME_POWER);
+    boolrec.set(true);
+
+    device.add(binrec);
+    device.add(boolrec);
+
+    char output[500] = {0};
+    ThingsML::httpPost(output, 500, "MYKEY2", "1.1.1.1", "/bla", device);
+
+    device.clear();
+    device.add(binrec);
+
+    int len = ThingsML::httpPost(output, 500, "MYKEY2", "1.1.1.1", "/bla", device);
+
+    EXPECT_EQ(226, len);
+    EXPECT_EQ(len, strlen(output));
+    EXPECT_STREQ("POST /bla HTTP/1.1\nHost: 1.1.1.1\nContent-Type: application/json\nThings-Message-Token: 4d53c667486bb4679922b901dd733a936a07983f73275941abfb3068a0ba8748\nContent-Length: 55\n\n[{\"bn\":\"device-name\",\"n\":\"humidity\",\"vd\":\"aG9paG9pAA\"}]", output);
 }
 
 

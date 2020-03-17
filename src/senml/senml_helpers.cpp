@@ -25,13 +25,49 @@
 // global reference to the stream and stream configuration. This should save us memory
 // by not having to pass these values continuously on the stack.
 StreamContext *_streamCtx = NULL;
+static const char hexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+
+
+int printByte(uint8_t value) {
+    if (_streamCtx->dataAsBlob) {
+        if (_streamCtx->format == SENML_RAW) {
+            // if we reached the end of the buffer, stop rendering otherwise we overwrite some other mem which is
+            // not good.
+            if (_streamCtx->data.blob.curPos >= _streamCtx->data.blob.length) {
+                return 0;
+            }
+            _streamCtx->data.blob.data[_streamCtx->data.blob.curPos++] = value;
+        } else if (_streamCtx->format == SENML_HEX) {
+            // if we reached the end of the buffer, stop rendering otherwise we overwrite some other mem which is
+            // not good.
+            if ((_streamCtx->data.blob.curPos + 1) >= _streamCtx->data.blob.length) {
+                return 0;
+            }
+            _streamCtx->data.blob.data[_streamCtx->data.blob.curPos++] = hexTable[(value >> 4) & 0x0F];
+            _streamCtx->data.blob.data[_streamCtx->data.blob.curPos++] = hexTable[(value) & 0x0F];
+        }
+    } else {
+        if (_streamCtx->format == SENML_RAW) {
+#ifdef __MBED__
+            _streamCtx->data.stream->putc(value);
+#else
+            _streamCtx->data.stream->print(value);
+#endif
+        } else if (_streamCtx->format == SENML_HEX) {
+#ifdef __MBED__
+            _streamCtx->data.stream->putc(hexTable[value >> 4]);
+            _streamCtx->data.stream->putc(hexTable[value & 0x0F]);
+#else
+            _streamCtx->data.stream->print(hexTable[value >> 4]);
+            _streamCtx->data.stream->print(hexTable[value & 0x0F]);
+#endif
+        }
+    }
+    return 1;
+}
 
 int printInt(int i) {
-#ifdef __MBED__
-    char s[30];
-    sprintf(s, "%f", i);
-    return printText(s, strlen(s));
-#elif defined(ARDUINO)
+#if defined(ARDUINO)
     String temp(i);
     return printText(temp.c_str(), temp.length());
 #else
@@ -41,13 +77,13 @@ int printInt(int i) {
 }
 
 int printDouble(double f, unsigned int digits) {
-#ifdef __MBED__
-    char s[30];
-    sprintf(s, "%f", f);
-    return printText(s, strlen(s));
-#elif defined(ARDUINO)
+#if defined(ARDUINO)
     String temp(f, digits);
-    const char *s = temp.c_str();
+#else 
+    string temp = to_string(f);
+#endif
+#if defined(ARDUINO) || defined(__MBED__)
+    const char * s = temp.c_str();
     int length = temp.length();
 
     for (int i = length - 1; i > 0; i--) { // remove unwanted trailing 0
@@ -62,8 +98,7 @@ int printDouble(double f, unsigned int digits) {
     }
     return printText(s, length + 1);
 #else
-    string str = to_string(f);
-    return printText(str.c_str(), str.length());
+    return printText(temp.c_str(), temp.length());
 #endif
 }
 
@@ -75,14 +110,8 @@ int printBinaryAsBase64(const unsigned char *data, unsigned int length) {
     int encodedLen = base64_enc_len(length);
     char *encoded = (char *)malloc(encodedLen);
 
-#ifdef __MBED__
-    // todo: check result of function
-    size_t olen;
-    mbedtls_base64_encode((unsigned char *)encoded, encodedLen, &olen, data, length);
-#else
     // note input is consumed in this step: it will be empty afterwards
     base64_encode(encoded, (char *)data, length);
-#endif
     printText(encoded, encodedLen);
     free(encoded);
     return encodedLen;
@@ -101,7 +130,6 @@ int printUnit(SenMLUnit unit) {
 #endif
 }
 
-const char hexTable[16] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 int printText(const char *const value, int length) {
     // const unsigned char * val = (unsigned char*) value;
     if (_streamCtx->dataAsBlob) {
@@ -128,7 +156,7 @@ int printText(const char *const value, int length) {
     } else {
         if (_streamCtx->format == SENML_RAW) {
 #ifdef __MBED__
-            for (int i = 0; i < len; i++)
+            for (int i = 0; i < length; i++)
                 _streamCtx->data.stream->putc(value[i]);
 #else
             _streamCtx->data.stream->write(value, length);
@@ -191,6 +219,14 @@ int printText(const __FlashStringHelper *input, int length) {
     return length;
 }
 #endif
+
+bool canPrint(int length) {
+    if (_streamCtx->dataAsBlob) {
+        return (_streamCtx->data.blob.curPos + length) < _streamCtx->data.blob.length;
+    }
+    return true;
+}
+
 
 static bool peeked = false; // if we peek the stream in HEX format, we actually need to read 2 bytes, so the peek
                             // doesn't work, but we need to read the actual value.

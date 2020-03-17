@@ -40,7 +40,9 @@ int SenMLBinaryRecord::fieldsToCbor()
     return res;
 }
 
-
+unsigned char * SenMLBinaryRecord::get() {
+    return this->_value;
+}
 
 
 

@@ -11,14 +11,12 @@
 #define MICROCHIP_RESET_PORT 5
 
 /**
- *
  * Configuration
- *
  */
-const String DevEUI = "--fill--devui--";
-const String AppEUI = "--fill--appui--";
+const String DevEUI = "--fill--deveui--";
+const String AppEUI = "--fill--appeui--";
 const String AppKey = "--fill--appkey--";
-const int TEMPERATURE_ANALOG_PORT = A0;
+const int TEMPERATURE_ANALOG_PORT = A3;
 
 bool ForceReconfigureMicrochip = false; // To always configure MAC
 

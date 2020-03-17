@@ -96,6 +96,10 @@ class SenMLRecord : public SenMLBase {
         return this->_name;
     }
 
+    inline ThingsMLMeasurementIndex getIndex() {
+        return this->_index;
+    }
+
     /**
      * Assign an identifier to the record. This is a free-form string, but a set of
      * predefined names, supported by the KPN network can be found in senml_enums.h

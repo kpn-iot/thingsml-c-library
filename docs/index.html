@@ -1,0 +1,884 @@
+
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Library Reference</title>
+
+    <style>
+      .highlight table td { padding: 5px; }
+.highlight table pre { margin: 0; }
+.highlight .gh {
+  color: #999999;
+}
+.highlight .sr {
+  color: #f6aa11;
+}
+.highlight .go {
+  color: #888888;
+}
+.highlight .gp {
+  color: #555555;
+}
+.highlight .gs {
+}
+.highlight .gu {
+  color: #aaaaaa;
+}
+.highlight .nb {
+  color: #f6aa11;
+}
+.highlight .cm {
+  color: #75715e;
+}
+.highlight .cp {
+  color: #75715e;
+}
+.highlight .c1 {
+  color: #75715e;
+}
+.highlight .cs {
+  color: #75715e;
+}
+.highlight .c, .highlight .cd {
+  color: #75715e;
+}
+.highlight .err {
+  color: #960050;
+}
+.highlight .gr {
+  color: #960050;
+}
+.highlight .gt {
+  color: #960050;
+}
+.highlight .gd {
+  color: #49483e;
+}
+.highlight .gi {
+  color: #49483e;
+}
+.highlight .ge {
+  color: #49483e;
+}
+.highlight .kc {
+  color: #66d9ef;
+}
+.highlight .kd {
+  color: #66d9ef;
+}
+.highlight .kr {
+  color: #66d9ef;
+}
+.highlight .no {
+  color: #66d9ef;
+}
+.highlight .kt {
+  color: #66d9ef;
+}
+.highlight .mf {
+  color: #ae81ff;
+}
+.highlight .mh {
+  color: #ae81ff;
+}
+.highlight .il {
+  color: #ae81ff;
+}
+.highlight .mi {
+  color: #ae81ff;
+}
+.highlight .mo {
+  color: #ae81ff;
+}
+.highlight .m, .highlight .mb, .highlight .mx {
+  color: #ae81ff;
+}
+.highlight .sc {
+  color: #ae81ff;
+}
+.highlight .se {
+  color: #ae81ff;
+}
+.highlight .ss {
+  color: #ae81ff;
+}
+.highlight .sd {
+  color: #e6db74;
+}
+.highlight .s2 {
+  color: #e6db74;
+}
+.highlight .sb {
+  color: #e6db74;
+}
+.highlight .sh {
+  color: #e6db74;
+}
+.highlight .si {
+  color: #e6db74;
+}
+.highlight .sx {
+  color: #e6db74;
+}
+.highlight .s1 {
+  color: #e6db74;
+}
+.highlight .s {
+  color: #e6db74;
+}
+.highlight .na {
+  color: #a6e22e;
+}
+.highlight .nc {
+  color: #a6e22e;
+}
+.highlight .nd {
+  color: #a6e22e;
+}
+.highlight .ne {
+  color: #a6e22e;
+}
+.highlight .nf {
+  color: #a6e22e;
+}
+.highlight .vc {
+  color: #ffffff;
+}
+.highlight .nn {
+  color: #ffffff;
+}
+.highlight .nl {
+  color: #ffffff;
+}
+.highlight .ni {
+  color: #ffffff;
+}
+.highlight .bp {
+  color: #ffffff;
+}
+.highlight .vg {
+  color: #ffffff;
+}
+.highlight .vi {
+  color: #ffffff;
+}
+.highlight .nv {
+  color: #ffffff;
+}
+.highlight .w {
+  color: #ffffff;
+}
+.highlight {
+  color: #ffffff;
+}
+.highlight .n, .highlight .py, .highlight .nx {
+  color: #ffffff;
+}
+.highlight .ow {
+  color: #f92672;
+}
+.highlight .nt {
+  color: #f92672;
+}
+.highlight .k, .highlight .kv {
+  color: #f92672;
+}
+.highlight .kn {
+  color: #f92672;
+}
+.highlight .kp {
+  color: #f92672;
+}
+.highlight .o {
+  color: #f92672;
+}
+    </style>
+    <link href="stylesheets/screen.css" rel="stylesheet" media="screen" />
+    <link href="stylesheets/print.css" rel="stylesheet" media="print" />
+      <script src="javascripts/all.js"></script>
+  </head>
+
+  <body class="index" data-languages="[&quot;c--arduino&quot;,&quot;c--mbed&quot;]">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" alt="Navbar" />
+      </span>
+    </a>
+    <div class="toc-wrapper">
+      <img src="images/logo.png" class="logo" alt="Logo" />
+        <div class="lang-selector">
+              <a href="#" data-language-name="c--arduino">arduino</a>
+              <a href="#" data-language-name="c--mbed">mbed</a>
+        </div>
+        <div class="search">
+          <input type="text" class="search" id="input-search" placeholder="Search">
+        </div>
+        <ul class="search-results"></ul>
+      <div id="toc" class="toc-list-h1">
+          <li>
+            <a href="#introduction" class="toc-h1 toc-link" data-title="introduction">Introduction</a>
+          </li>
+          <li>
+            <a href="#key-features" class="toc-h1 toc-link" data-title="key-features">Key features</a>
+          </li>
+          <li>
+            <a href="#supported-platforms" class="toc-h1 toc-link" data-title="supported-platforms">Supported platforms</a>
+          </li>
+          <li>
+            <a href="#getting-started" class="toc-h1 toc-link" data-title="getting-started">Getting Started</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#installation" class="toc-h2 toc-link" data-title="installation">Installation</a>
+                  </li>
+                  <li>
+                    <a href="#usage-for-lorawan" class="toc-h2 toc-link" data-title="usage-for-lorawan">Usage for LoRaWAN</a>
+                  </li>
+                  <li>
+                    <a href="#usage-for-m2m" class="toc-h2 toc-link" data-title="usage-for-m2m">Usage for m2m</a>
+                  </li>
+                  <li>
+                    <a href="#further-usage" class="toc-h2 toc-link" data-title="further-usage">Further usage</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#details" class="toc-h1 toc-link" data-title="details">Details</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#object-oriented-class-structure" class="toc-h2 toc-link" data-title="object-oriented-class-structure">Object oriented: class structure</a>
+                  </li>
+                  <li>
+                    <a href="#names-and-units" class="toc-h2 toc-link" data-title="names-and-units">Names and Units</a>
+                  </li>
+                  <li>
+                    <a href="#associating-records-with-a-document" class="toc-h2 toc-link" data-title="associating-records-with-a-document">Associating records with a document</a>
+                  </li>
+                  <li>
+                    <a href="#looping-over-the-records" class="toc-h2 toc-link" data-title="looping-over-the-records">Looping over the records</a>
+                  </li>
+                  <li>
+                    <a href="#gateways" class="toc-h2 toc-link" data-title="gateways">Gateways</a>
+                  </li>
+                  <li>
+                    <a href="#rendering" class="toc-h2 toc-link" data-title="rendering">Rendering</a>
+                  </li>
+                  <li>
+                    <a href="#decoding" class="toc-h2 toc-link" data-title="decoding">Decoding</a>
+                  </li>
+                  <li>
+                    <a href="#implementing-your-own-record-types" class="toc-h2 toc-link" data-title="implementing-your-own-record-types">implementing your own record types</a>
+                  </li>
+              </ul>
+          </li>
+      </div>
+    </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+        <h1 id='introduction'>Introduction</h1>
+<p>Welcome to the KPN ThingsML API documentation! You can use our library for the creation of <a href="https://tools.ietf.org/html/draft-ietf-core-senml-13">senml documents</a> on embedded devices so you can transport and/or receive data in a uniform way to and from devices using a communication protocol of your choice.<br>
+For an indepth look into what senml is and what it can mean for you, check out <a href="http://www.elastetic.com/wp/2018/05/20/senml-messages/">this article</a>.</p>
+<h1 id='key-features'>Key features</h1>
+<ul>
+<li>Object oriented design. </li>
+<li>built in support for <a href="https://tools.ietf.org/html/draft-ietf-core-senml-12#section-12.1">senml&#39;s unit registry</a> </li>
+<li>extensible for new data types</li>
+<li>makes use of (but doesn&#39;t restrict to) ThingsML predefined list of record names via ThingsML indices.</li>
+<li>direct support to read/write in json and cbor format.</li>
+<li>automatically adjusts record data with respect to base time, base value &amp; base sum.</li>
+<li>The C++ version of the library is optimized for devices with restricted memory requirements (runs on AVR systems with 1KB ram). </li>
+</ul>
+<h1 id='supported-platforms'>Supported platforms</h1>
+<p>The library has been tested on the following platforms with their respective devices:</p>
+
+<ul>
+<li>Arduino
+
+<ul>
+<li>Arduino leonardo (through <a href="https://www.kickstarter.com/projects/688158475/marvin-the-lora-development-board/description">the marvin</a> lorawan board)</li>
+<li>Arduino Uno</li>
+<li>Arduino MKR WAN 1300</li>
+<li>Arduino MKR GSM 1400</li>
+<li>The Things Uno</li>
+</ul></li>
+<li>Mbed OS
+
+<ul>
+<li><a href="https://www.st.com/en/evaluation-tools/nucleo-l152re.html">STM32 Nucleo-L152RE</a></li>
+</ul></li>
+<li>PC (windows/linux via <a href="https://bazel.build/">Bazel</a>)</li>
+</ul>
+<h1 id='getting-started'>Getting Started</h1><h2 id='installation'>Installation</h2>
+<blockquote class="lang-specific c--arduino">
+<p>Get it from <a href="https://github.com/kpn-iot/thingsml-c-library">github</a> </p>
+</blockquote>
+
+<blockquote class="lang-specific c--mbed">
+<p>You can import it using this link: <a href="https://os.mbed.com/users/kpniot/code/thingsml/">mbed thingsml library</a>  (click on 'import into compiler) or directly from within the mbed online editor. Search for the library thingsml</p>
+</blockquote>
+
+<ul>
+<li>Get the library. You can find the language appropriate link to the right.</li>
+<li>Installation:
+
+<ul>
+<li><em>arduino</em>: 
+
+<ul>
+<li>Follow <a href="https://www.arduino.cc/en/Guide/Libraries">these instructions</a> to install the library in the arduino ide.</li>
+</ul></li>
+<li>mbed: on the mbed online editor:
+
+<ul>
+<li>create or open a project</li>
+<li>right click on the project and select &#39;import library&#39;</li>
+<li>if you select from url, use the <a href="https://os.mbed.com/users/kpniot/code/thingsml/">mbed thingsml library</a></li>
+<li>if you select: &#39;from import wizard&#39;:
+
+<ul>
+<li>search for &#39;thingsml&#39;</li>
+<li>double click on the search result which will start the import process.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id='usage-for-lorawan'>Usage for LoRaWAN</h2><pre class="highlight c tab-c--arduino"><code><span class="cp">#include &lt;thingsml.h&gt;
+</span></code></pre><pre class="highlight c tab-c--mbed"><code><span class="cp">#include &lt;thingsml.h&gt;
+</span></code></pre>
+<ul>
+<li>First off, you need to include the library in your sketch or application. So put the example code (in the right side panel) somewhere near the top of your source. </li>
+</ul>
+<pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">;</span>
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">;</span>
+<span class="n">Serial</span> <span class="n">pc</span><span class="p">(</span><span class="n">USBTX</span><span class="p">,</span> <span class="n">USBRX</span><span class="p">);</span>
+</code></pre>
+<ul>
+<li>Next, you have to declare a variable of type &#39;SenMLPack&#39;, which will function as the document that contains all your measurement values. This can be a global or local to a function.</li>
+</ul>
+<pre class="highlight c tab-c--arduino"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span>  
+    <span class="n">temperature</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>                  
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+    <span class="c1">// check mypin object is initialized and connected to a pin
+</span>    <span class="k">if</span><span class="p">(</span><span class="n">mypin</span><span class="p">.</span><span class="n">is_connected</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"mypin is connected and initialized! </span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">mypin</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">PullNone</span><span class="p">);</span>     
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">mypin</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+        <span class="n">temperature</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>              
+</code></pre>
+<ul>
+<li>Measurement values are added to the document through objects of the type SenMlRecord. These can also be global, statically declared objects or they can be local to a function. These always need to have a value or sum, but usually you also give records a name and measurement unit. The library contains a set of predefined values for both records a name and measurement unit via the ThingsMLMeasurementIndex enum. Although you are free to pick any record name that you want, this is not the case for the units. This list is fixed via the SenMLUnit enum.</li>
+</ul>
+<pre class="highlight c tab-c--arduino"><code>    <span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">Serial</span><span class="p">);</span>        <span class="c1">//print to screen
+</span><span class="p">}</span>
+</code></pre><pre class="highlight c tab-c--mbed"><code>        <span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>        <span class="c1">//print to screen
+</span>        <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+<ul>
+<li>finally, you can render the senml json string and print it out. This can be either to a stream or you can render it to a memory buffer.</li>
+</ul>
+
+<p>The resulting code snippet reads the value, stores this measurement in a senml record as temperature in degrees Celsius. The document object renders a json string to the Serial output.</p>
+<h2 id='usage-for-m2m'>Usage for m2m</h2>
+<p>Usage for m2m devices (2G/Lte-m based) is very similair to LoRaWAN with the exception that the data is transmitted using TCP to an HTTP server.
+To ease development ThingsML includes a HTTP Post builder, which includes functionality to calculate the needed authentication token. </p>
+<pre class="highlight c tab-c--arduino"><code><span class="cp">#include &lt;thingsml_http.h&gt;
+</span></code></pre><pre class="highlight c tab-c--mbed"><code><span class="cp">#include &lt;thingsml_http.h&gt;
+</span></code></pre>
+<ul>
+<li>To obtain this functionality a different header has to be included.</li>
+</ul>
+<pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"urn:dev:IMEI:1234:"</span><span class="p">);</span> <span class="c1">// Device name is now required and cannot be omitted like in LoRa.
+</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="kt">char</span> <span class="n">output</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// 500 characters is big enough for most messages.
+</span>
+<span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">9600</span><span class="p">);</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
+    <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">analogRead</span><span class="p">(</span><span class="n">A1</span><span class="p">);</span>  
+    <span class="n">temperature</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>
+
+    <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">ThingsML</span><span class="o">::</span><span class="n">httpPost</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="s">"MYKEY"</span><span class="p">,</span> <span class="s">"1.1.1.1"</span><span class="p">,</span> <span class="s">"/post/path"</span><span class="p">,</span> <span class="n">device</span><span class="p">);</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"urn:dev:IMEI:1234:"</span><span class="p">);</span> <span class="c1">// Device name is now required and cannot be omitted like in LoRa.
+</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">Serial</span> <span class="n">pc</span><span class="p">(</span><span class="n">USBTX</span><span class="p">,</span> <span class="n">USBRX</span><span class="p">);</span>
+<span class="kt">char</span> <span class="n">output</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// 500 characters is big enough for most messages.
+</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>
+    <span class="c1">// check mypin object is initialized and connected to a pin
+</span>    <span class="k">if</span><span class="p">(</span><span class="n">mypin</span><span class="p">.</span><span class="n">is_connected</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"mypin is connected and initialized! </span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">mypin</span><span class="p">.</span><span class="n">mode</span><span class="p">(</span><span class="n">PullNone</span><span class="p">);</span>     
+    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">mypin</span><span class="p">.</span><span class="n">read</span><span class="p">();</span>
+        <span class="n">temperature</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">val</span><span class="p">);</span>  
+        <span class="kt">int</span> <span class="n">len</span> <span class="o">=</span> <span class="n">ThingsML</span><span class="o">::</span><span class="n">httpPost</span><span class="p">(</span><span class="n">output</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="s">"MYKEY"</span><span class="p">,</span> <span class="s">"1.1.1.1"</span><span class="p">,</span> <span class="s">"/post/path"</span><span class="p">,</span> <span class="n">device</span><span class="p">);</span>
+        <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
+        <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>   
+</code></pre>
+<ul>
+<li>Also serilization is slightly different and is only possible using a buffer. This restrictions exists because of the required token. </li>
+</ul>
+<h2 id='further-usage'>Further usage</h2>
+<p>Further usage can be found by using the examples packaged with this library.
+These can be found in the Arduino IDE under File&gt;Examples&gt;ThingsML.</p>
+<h1 id='details'>Details</h1>
+<p>The more in depth details of the library are explained below.</p>
+<h2 id='object-oriented-class-structure'>Object oriented: class structure</h2>
+<p><img src="images/library_design_c.png" alt="class diagram" />   </p>
+
+<p>The root class for all senml documents is called &#39;SenMlPack&#39;.  It defines the base name, base unit and base time of the document.  This object can also contain 0, 1 or more SenMlRecords where each record represents a single measurement (or command for actuators).<br>
+In order to declare a base value or base sum, you have to use one of SenMLPack&#39;s descendants with the correct data type.<br>
+The library contains a pre-defined SenMlRecord class for the most common data types: string, boolean, double, float, integer and binary. But, you can extend this with your own types through the SenMLRecord template for basic data types such as longlong.<br>
+A SenMLPack can contain all object types as children: anything that descends from SenMLBase can be a child. See <a href="#gateways">gateways</a> for more info.</p>
+<h2 id='names-and-units'>Names and Units</h2>
+<p>The library defines an enum for all of senml&#39;s supported measurement units (as in &#39;kilogram&#39;, &#39;meter&#39;,...). This makes it easier to keep compliance with the <a href="https://tools.ietf.org/html/draft-ietf-core-senml-13">senml specifications</a> so you don&#39;t have to worry about the exact unit symbols: the library takes care of this.<br>
+Similarly, the library also provides an enum with all the ThingsML names that the ThingsML standard supports.<br>
+Although it is possible that you assign your own name to a record, it is recommended to use ThingsML naming convention as this allows data to be addressed in a more semantic manner.<br>
+According to the SenML specifications, all names are optional, so you don&#39;t have to declare a base name on the SenMLPack object nor a name for SenMLRecords. This makes it harder though to identify your data. 
+In general, it is advisable to specify the name of the device as the base name and the name of the sensor as the record name. Alternatively, you can skip the base name and put both device and sensor name in the record, in this format: <code>device:sensor</code>.
+The following ThingsML enums with their respective names and units are supported:</p>
+
+<table><thead>
+<tr>
+<th>Enum Key</th>
+<th>Name</th>
+<th>Unit</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>THINGSML_TEMPERATURE</td>
+<td>temperature</td>
+<td>Cel</td>
+</tr>
+<tr>
+<td>THINGSML_HUMIDITY</td>
+<td>humidity</td>
+<td>%RH</td>
+</tr>
+<tr>
+<td>THINGSML_LATITUDE</td>
+<td>latitude</td>
+<td>lat</td>
+</tr>
+<tr>
+<td>THINGSML_LONGITUDE</td>
+<td>longitude</td>
+<td>lon</td>
+</tr>
+<tr>
+<td>THINGSML_ALTITUDE</td>
+<td>altitude</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_POWER</td>
+<td>power</td>
+<td>W</td>
+</tr>
+<tr>
+<td>THINGSML_PRESSURE</td>
+<td>pressure</td>
+<td>Pa</td>
+</tr>
+<tr>
+<td>THINGSML_ANGLE</td>
+<td>angle</td>
+<td>rad</td>
+</tr>
+<tr>
+<td>THINGSML_LENGTH</td>
+<td>length</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_BREADTH</td>
+<td>breadth</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_HEIGHT</td>
+<td>height</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_WEIGHT</td>
+<td>weight</td>
+<td>kg</td>
+</tr>
+<tr>
+<td>THINGSML_THICKNESS</td>
+<td>thickness</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_DISTANCE</td>
+<td>distance</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_AREA</td>
+<td>area</td>
+<td>m2</td>
+</tr>
+<tr>
+<td>THINGSML_VOLUME</td>
+<td>volume</td>
+<td>m3</td>
+</tr>
+<tr>
+<td>THINGSML_VELOCITY</td>
+<td>velocity</td>
+<td>m/s</td>
+</tr>
+<tr>
+<td>THINGSML_ELECTRIC_CURRENT</td>
+<td>electricCurrent</td>
+<td>A</td>
+</tr>
+<tr>
+<td>THINGSML_ELECTRIC_POTENTIAL</td>
+<td>electricPotential</td>
+<td>V</td>
+</tr>
+<tr>
+<td>THINGSML_ELECTRIC_RESISTANCE</td>
+<td>electricResistance</td>
+<td>Ohm</td>
+</tr>
+<tr>
+<td>THINGSML_ILLUMINANCE</td>
+<td>illuminance</td>
+<td>lx</td>
+</tr>
+<tr>
+<td>THINGSML_ACCELERATION_X</td>
+<td>accelerationX</td>
+<td>m/s2</td>
+</tr>
+<tr>
+<td>THINGSML_ACCELERATION_Y</td>
+<td>accelerationY</td>
+<td>m/s2</td>
+</tr>
+<tr>
+<td>THINGSML_ACCELERATION_Z</td>
+<td>accelerationZ</td>
+<td>m/s2</td>
+</tr>
+<tr>
+<td>THINGSML_HEADING</td>
+<td>heading</td>
+<td>rad</td>
+</tr>
+<tr>
+<td>THINGSML_CO_CONCENTRATION</td>
+<td>COConcentration</td>
+<td>ppm</td>
+</tr>
+<tr>
+<td>THINGSML_CO2_CONCENTRATION</td>
+<td>CO2Concentration</td>
+<td>ppm</td>
+</tr>
+<tr>
+<td>THINGSML_SOUND</td>
+<td>sound</td>
+<td>db</td>
+</tr>
+<tr>
+<td>THINGSML_FREQUENCY</td>
+<td>frequency</td>
+<td>Hz</td>
+</tr>
+<tr>
+<td>THINGSML_BATTERY_LEVEL</td>
+<td>batteryLevel</td>
+<td>%EL</td>
+</tr>
+<tr>
+<td>THINGSML_BATTERY_VOLTAGE</td>
+<td>batteryVoltage</td>
+<td>V</td>
+</tr>
+<tr>
+<td>THINGSML_RADIUS</td>
+<td>radius</td>
+<td>m</td>
+</tr>
+<tr>
+<td>THINGSML_BATTERY_LEVEL_LOW</td>
+<td>batteryLevelLow</td>
+<td>/</td>
+</tr>
+<tr>
+<td>THINGSML_COMPASS_X</td>
+<td>compassX</td>
+<td>T</td>
+</tr>
+<tr>
+<td>THINGSML_COMPASS_Y</td>
+<td>compassY</td>
+<td>T</td>
+</tr>
+<tr>
+<td>THINGSML_COMPASS_Z</td>
+<td>compassZ</td>
+<td>T</td>
+</tr>
+<tr>
+<td>THINGSML_READ_SWITCH</td>
+<td>readSwitch</td>
+<td>/</td>
+</tr>
+<tr>
+<td>THINGSML_PRESENCE</td>
+<td>presence</td>
+<td></td>
+</tr>
+<tr>
+<td>THINGSML_COUNTER</td>
+<td>counter</td>
+<td></td>
+</tr>
+</tbody></table>
+
+<aside class="info">For LoRa devices using KPN Things the device name can be omitted to reduce the payload size, however for M2M devices the name is required identification information and cannot be ommitted when using KPN Things.</aside>
+<h2 id='associating-records-with-a-document'>Associating records with a document</h2><pre class="highlight c tab-c--arduino"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
+</code></pre>
+<p>You can add records to the document with the function <code>add</code>. This can be done statically (add once at start up and never remove ) for devices that will always send out the same document structure with the same records. Or, you can dynamically add records to the document as your application progresses. A common use case for this method is when the device does not have network connectivity at the moment that the measurement is taken, but instead, takes a number of measurements, and, when a connection is available, uploads all the measurements at once.  This method is also useful to minimize the number of communication packets that a device sends out by grouping multiple measurements into a single data packet.  </p>
+<pre class="highlight c tab-c--arduino"><code><span class="n">doc</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>                      
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">doc</span><span class="p">.</span><span class="n">clear</span><span class="p">();</span>                        
+</code></pre>
+<p>For documents that work with a dynamically sized list of records, you can clear out the list once the data has been sent.<br>
+Alternatively, when SenMlRecords go out of scope or are deleted, they remove themselves automatically from their root document.   </p>
+
+<aside class="warning">You are responsible for destroying objects. If you dynamically created a SenMLRecord, added it to the list and then cleared that list, you must still delete the object yourself in order to avoid memory leaks.</aside>
+<h2 id='looping-over-the-records'>Looping over the records</h2><pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">);</span>
+<span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
+
+<span class="n">SenMLBase</span><span class="o">*</span> <span class="n">item</span> <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">getFirst</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">item</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(((</span><span class="n">SenMLRecord</span><span class="o">*</span><span class="p">)</span><span class="n">item</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">());</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">-&gt;</span><span class="n">getNext</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">);</span>
+<span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>           
+
+<span class="n">SenMLBase</span><span class="o">*</span> <span class="n">item</span> <span class="o">=</span> <span class="n">device</span><span class="p">.</span><span class="n">getFirst</span><span class="p">();</span>
+<span class="k">while</span><span class="p">(</span><span class="n">item</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">){</span>
+    <span class="n">printf</span><span class="p">(((</span><span class="n">SenMLRecord</span><span class="o">*</span><span class="p">)</span><span class="n">item</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">());</span>
+    <span class="n">item</span> <span class="o">=</span> <span class="n">item</span><span class="o">-&gt;</span><span class="n">getNext</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre>
+<p>Internally a linked list is used to store the records that it manages. This helps in minimizing the usage of dynamically allocated memory (important for devices with little available ram).<br>
+To walk over the child list of a SenMLPack, you can use the following functions:</p>
+
+<ul>
+<li>SenMLPack::getFirst() : retrieve the first item in the list</li>
+<li>SenMLBase::getNext()  : get the next item in the list. When this returns NULL, the end of the list has been reached.</li>
+</ul>
+<h2 id='gateways'>Gateways</h2><pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">doc</span><span class="p">(</span><span class="s">"gateway"</span><span class="p">);</span>
+<span class="n">SenMLPack</span> <span class="n">dev1</span><span class="p">(</span><span class="s">"dev1"</span><span class="p">);</span>
+<span class="n">SenMLPack</span> <span class="n">dev2</span><span class="p">(</span><span class="s">"dev2"</span><span class="p">);</span>
+
+<span class="n">doc</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dev1</span><span class="p">);</span>
+<span class="n">doc</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dev2</span><span class="p">);</span>
+
+<span class="n">SenMLFloatRecord</span> <span class="n">rec1</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">dev1</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">rec1</span><span class="p">);</span>                       
+
+<span class="n">SenMLStringRecord</span> <span class="n">rec2</span><span class="p">(</span><span class="s">"text"</span><span class="p">,</span> <span class="n">SENML_UNIT_NONE</span><span class="p">,</span> <span class="s">"working"</span><span class="p">);</span>
+<span class="n">dev2</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">rec2</span><span class="p">);</span> 
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLPack</span> <span class="n">doc</span><span class="p">(</span><span class="s">"gateway"</span><span class="p">);</span>
+<span class="n">SenMLPack</span> <span class="n">dev1</span><span class="p">(</span><span class="s">"dev1"</span><span class="p">);</span>
+<span class="n">SenMLPack</span> <span class="n">dev2</span><span class="p">(</span><span class="s">"dev2"</span><span class="p">);</span>
+
+<span class="n">doc</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dev1</span><span class="p">);</span>
+<span class="n">doc</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">dev2</span><span class="p">);</span>
+
+<span class="n">SenMLFloatRecord</span> <span class="n">rec1</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">dev1</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">rec1</span><span class="p">);</span>                       
+
+<span class="n">SenMLStringRecord</span> <span class="n">rec2</span><span class="p">(</span><span class="s">"text"</span><span class="p">,</span> <span class="n">SENML_UNIT_NONE</span><span class="p">,</span> <span class="s">"working"</span><span class="p">);</span>
+<span class="n">dev2</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">rec2</span><span class="p">);</span>                       
+</code></pre>
+<p>It is possible to transmit/receive SenMLPack objects that contain other SenMLPack objects. This is used by gateways that work as an intermediate for devices that don&#39;t have a direct connection with the outside world or which can&#39;t speak senml and need a device that performs a translation between the protocol that they understand and senml.<br>
+Creating such messages is pretty straight forward, just like you add SenMLRecords to a Pack, you can also add SenMLPack objects. A SenMLPack can contain both SenMLRecords and other SenMLPack objects at the same time. This means that the gateway can contain it&#39;s own sensor data, besides the information from the other devices.<br>
+This works for sensor values that need to be sent out and for actuators.  </p>
+<h2 id='rendering'>Rendering</h2><pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">);</span>
+<span class="n">SenMLFloatRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">,</span> <span class="mi">23</span><span class="p">.</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
+
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">Serial</span><span class="p">);</span>                                   <span class="c1">//render as a json string to the stream
+</span>
+<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">120</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>   
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>                    <span class="c1">//render as a json string to a memory buffer
+</span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">SENML_HEX</span><span class="p">);</span>         <span class="c1">//render as a hexified json string to a memory buffer
+</span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+
+<span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">Serial</span><span class="p">);</span>                                       <span class="c1">//render it as a raw binary data blob directly to stream
+</span><span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">Serial</span><span class="p">,</span> <span class="n">SENML_HEX</span><span class="p">);</span>                            <span class="c1">//directly rendering HEX values to stream
+</span>
+<span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">SENML_HEX</span><span class="p">);</span>         <span class="c1">//render cbor HEX values to memory 
+</span><span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">Serial</span> <span class="n">pc</span><span class="p">(</span><span class="n">USBTX</span><span class="p">,</span> <span class="n">USBRX</span><span class="p">);</span>
+<span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">);</span>
+<span class="n">SenMLFloatRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
+
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>                                        <span class="c1">//render as a json string to the stream
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+
+<span class="kt">char</span> <span class="n">buffer</span><span class="p">[</span><span class="mi">120</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span>   
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">));</span>                     <span class="c1">//render as a json string to a memory buffer
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+<span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+
+<span class="n">device</span><span class="p">.</span><span class="n">toJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">SENML_HEX</span><span class="p">);</span>          <span class="c1">//render as a hexified json string to a memory buffer
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+<span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+
+<span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>                                        <span class="c1">//render it as a raw binary data blob directly to stream
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s"> </span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+<span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">SENML_HEX</span><span class="p">);</span>                             <span class="c1">//directly renering HEX values to stream
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s"> </span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+
+<span class="n">device</span><span class="p">.</span><span class="n">toCbor</span><span class="p">(</span><span class="n">buffer</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">buffer</span><span class="p">),</span> <span class="n">SENML_HEX</span><span class="p">);</span>         <span class="c1">//render cbor HEX values to memory 
+</span><span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+<span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"</span><span class="se">\n\r</span><span class="s"> </span><span class="se">\n\r</span><span class="s">"</span><span class="p">);</span>
+</code></pre>
+<p>If you want to send out your sensor data, the code objects first need to be converted into a format that can easily be transported. This is usually in the form of a json string or binary cbor data.</p>
+
+<p><img src="images/render_c.png" alt="rendering steps" /><br>
+The rendering engine has the following features and characteristics:</p>
+
+<ul>
+<li>It can render directly to a stream or to a memory blob.  When rendering to a stream the system will use less memory since nothing is buffered but directly emitted to the stream. </li>
+<li>The engine can produce:
+
+<ul>
+<li>json data, in the form of a string </li>
+<li>cbor data, which is a binary format</li>
+</ul></li>
+<li>The engine can add a final step in the rendering process where the raw data (string or binary) is converted into HEX format. This is useful while rendering directly to a stream that expects hex data, which is the case for many LoRa modules.</li>
+<li>for each value that has to be rendered, all stages are done before moving on to the next value: each value gets converted to json or cbor, hexified and rendered to the output before moving on to the next value. This is also done to save memory.</li>
+</ul>
+
+<aside class="info">HEX values can be formatted in many different ways. The library can currently produce a layout used by microchip lora modems, which is in the form of: 'ABF123'. If the format that you need isn't supported, you will have to perform this final step yourself: first render to a memory blob, then walk over each value and convert it into HEX in the way that you need.</aside>
+<h2 id='decoding'>Decoding</h2><pre class="highlight c tab-c--arduino"><code><span class="kt">void</span> <span class="n">setTemp</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">){</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"set the temp of the boiler to  %i </span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">onActuator</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">record</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">value</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueLength</span><span class="p">,</span> <span class="n">SenMLDataType</span> <span class="n">dataType</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="s">"for unknown records"</span><span class="p">);</span>
+    <span class="n">printData</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">valueLength</span><span class="p">,</span> <span class="n">dataType</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">,</span> <span class="n">onActuator</span><span class="p">);</span>
+<span class="n">SenMLIntActuator</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">,</span> <span class="n">setTemp</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="n">setup</span><span class="p">(){</span>
+    <span class="n">Serial</span><span class="p">.</span><span class="n">begin</span><span class="p">(</span><span class="mi">57600</span><span class="p">);</span>
+    <span class="n">senMLSetLogger</span><span class="p">(</span><span class="n">Serial</span><span class="p">);</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>   
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">loop</span><span class="p">(){</span>
+    <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">buffer</span> <span class="o">=</span> <span class="s">"[{</span><span class="se">\"</span><span class="s">i_</span><span class="se">\"</span><span class="s">:-24,</span><span class="se">\"</span><span class="s">v</span><span class="se">\"</span><span class="s">:23}]"</span><span class="p">;</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">fromJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">Serial</span><span class="p">.</span><span class="n">available</span><span class="p">())</span> <span class="p">{</span>
+        <span class="n">device</span><span class="p">.</span><span class="n">fromCbor</span><span class="p">(</span><span class="n">Serial</span><span class="p">,</span> <span class="n">SENML_HEX</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>                      
+</code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">Serial</span> <span class="n">pc</span><span class="p">(</span><span class="n">USBTX</span><span class="p">,</span> <span class="n">USBRX</span><span class="p">);</span>
+
+<span class="kt">void</span> <span class="n">setTemp</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">){</span>
+    <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"set the temp of the boiler to  %i </span><span class="se">\r\n</span><span class="s">"</span><span class="p">,</span> <span class="n">value</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="n">onActuator</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">device</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">record</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span><span class="o">*</span> <span class="n">value</span><span class="p">,</span> <span class="kt">int</span> <span class="n">valueLength</span><span class="p">,</span> <span class="n">SenMLDataType</span> <span class="n">dataType</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"for unknown records"</span><span class="p">);</span>
+    <span class="n">printData</span><span class="p">(</span><span class="n">device</span><span class="p">,</span> <span class="n">record</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">valueLength</span><span class="p">,</span> <span class="n">dataType</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="c1">//use an interrupt callback so we only start to parse when data is available.
+//the Serial.readable() function behaves funky and returns 1 even if there is no char available.
+</span><span class="kt">void</span> <span class="n">serialDataCallback</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">doc</span><span class="p">.</span><span class="n">fromCbor</span><span class="p">(</span><span class="n">pc</span><span class="p">,</span> <span class="n">SENML_HEX</span><span class="p">);</span>               <span class="c1">//will block until a full message has arrived.
+</span><span class="p">}</span>
+
+<span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"device_name"</span><span class="p">,</span> <span class="n">onActuator</span><span class="p">);</span>
+<span class="n">SenMLIntActuator</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">,</span> <span class="n">setTemp</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="n">senMLSetLogger</span><span class="p">(</span><span class="n">pc</span><span class="p">);</span>
+    <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>   
+    <span class="n">pc</span><span class="p">.</span><span class="n">attach</span><span class="p">(</span><span class="o">&amp;</span><span class="n">serialDataCallback</span><span class="p">);</span>                 <span class="c1">// attach pc ISR for reading from stream
+</span>    <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span> <span class="n">buffer</span> <span class="o">=</span> <span class="s">"[{</span><span class="se">\"</span><span class="s">i_</span><span class="se">\"</span><span class="s">:-24,</span><span class="se">\"</span><span class="s">v</span><span class="se">\"</span><span class="s">:23}]"</span><span class="p">;</span>
+        <span class="n">device</span><span class="p">.</span><span class="n">fromJson</span><span class="p">(</span><span class="n">buffer</span><span class="p">);</span>
+        <span class="n">pc</span><span class="p">.</span><span class="n">printf</span><span class="p">(</span><span class="s">"done </span><span class="se">\r\n</span><span class="s"> </span><span class="se">\r\n</span><span class="s">"</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>                     
+</code></pre>
+<p>Extracting the appropriate information out of senml objects and converting it into the proper format so that the information can be used to drive actuators, can be a bit tedious on embedded devices. The senml library can help you with this so that it becomes easy to send senml messages to your device as actuator commands (send instructions to your devices).  It provides a parsing engine that can handle both json and cbor senml data.<br>
+To process a senml message and retrieve the values, you can use the &#39;fromJson&#39; or &#39;fromCbor&#39; functions.  The values found in the message get passed to your application by means of callback functions that you attach to the SenMlPacket object and/or the SenMlRecords.<br>
+If you have a static list of records in your document, you can declare all the objects once, at the beginning, just like for rendering. The only difference here is that you have to attach a callback to each record for which you want to receive events.  During parsing, each callback will be executed when the record is found in the data.<br>
+If your device will receive a dynamic list of records or you want to have a &#39;catch-all&#39; for unknown records found in the message, than you should attach a callback to the root SenmlPack document. This function gets called for every record found in the data that can&#39;t be passed on to a known SenMLRecord. Besides the actual value, which is passed on as a generic void pointer, you also receive the name of the device, the name of the record and the data type so that your application can figure out what it should do for the specified data.    </p>
+
+<aside class="warning">It is up to you to determine if all expected records were present in the data or not.  The library does not check for this, but only passes on the values it can find to your applications.</aside>
+
+<aside class="info">You can also send messages to gateways. If you attached SenMLPack objects to the gateway object, then the callbacks of the appropriate device will be called. If no record can be found for the device, but the device is known, then the callback of the device is raised. If record nor device can be found, then the callback of the gateway is used.</aside>
+
+<aside class="info">SenMLPack object that just parsed some incoming data can be used again to render output. This can be useful to send 'ack' messages indicating that the data was correctly processed and the actuators have been changed to the new values.</aside>
+<h2 id='implementing-your-own-record-types'>implementing your own record types</h2>
+<p>It is possible to create your own, custom SenMlRecord classes. This can be used to provide support for more complex data types than already available in the library.  For instance, if you would like to work with a single SenMLRecord to represent location info (lat/lng/alt instead of 3 individual ones, than you could create a new class that inherits from the SenMlRecord that re-implement the rendering and parsing functions.<br>
+For the C++ version of the library, it can also be useful to add support for more basic data types such as longlong. This can easily be done through the SenMLRecordTemplate<T> class which already implements a lot of the functionality needed for records that wrap a basic data type. You can check out some of the existing implementations, such as SenMLIntRecord for inspiration.</p>
+
+      </div>
+      <div class="dark-box">
+          <div class="lang-selector">
+                <a href="#" data-language-name="c--arduino">arduino</a>
+                <a href="#" data-language-name="c--mbed">mbed</a>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>

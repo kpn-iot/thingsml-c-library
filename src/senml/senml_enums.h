@@ -83,7 +83,10 @@ enum ThingsMLMeasurementIndex {
     THINGSML_BATTERY_LEVEL_LOW = 8,
     THINGSML_COMPASS_X = 9,
     THINGSML_COMPASS_Y = 10,
-    THINGSML_COMPASS_Z = 11
+    THINGSML_COMPASS_Z = 11,
+    THINGSML_READ_SWITCH = 12,
+    THINGSML_PRESENCE = 13,
+    THINGSML_COUNTER = 14
 };
 
 /**
@@ -186,5 +189,8 @@ enum SenMLUnit {
 #define SENML_NAME_COMPASS_X "compassX"
 #define SENML_NAME_COMPASS_Y "compassY"
 #define SENML_NAME_COMPASS_Z "compassZ"
+#define SENML_NAME_READ_SWITCH "readSwitch"
+#define SENML_NAME_PRESENCE "presence"
+#define SENML_NAME_COUNTER "counter"
 
 #endif // !THINGSML_SENML_ENUMS

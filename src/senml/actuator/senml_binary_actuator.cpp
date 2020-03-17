@@ -21,25 +21,31 @@ void SenMLBinaryActuator::actuate(const void *value, int dataLength, SenMLDataTy
         char *decoded = (char *)malloc(decodedLen);
 #ifdef ESP32
         base64_decode_chars((const char *)value, dataLength, decoded);
-#elif __MBED__
-        // todo: check result of function
-        size_t olen;
-        mbedtls_base64_decode((unsigned char *)decoded, decodedLen, &olen, (const unsigned char *)value, dataLength);
 #else
         base64_decode(decoded, (char *)value, dataLength);
 #endif
-
-        this->set((unsigned char *)decoded, decodedLen);
-        if (this->callback)
-            this->callback((unsigned char *)decoded, decodedLen);
-
-        free(decoded);
+        set((unsigned char *)decoded, decodedLen);
+        lastAllocated = (unsigned char *) decoded;
+        if (callback) {
+            callback((unsigned char *)decoded, decodedLen);
+        }
     } else if (dataType == CBOR_TYPE_DATA) {
-        this->set((unsigned char *)value, dataLength);
-        if (this->callback) {
-            this->callback((unsigned char *)value, dataLength);
+        unsigned char * copy = (unsigned char *) malloc(dataLength);
+        memcpy(copy, value, dataLength);
+        set(copy, dataLength);
+        lastAllocated = copy;
+        if (callback) {
+            callback((unsigned char *)copy, dataLength);
         }
     } else {
         log_debug(F("invalid type"));
     }
+}
+
+bool SenMLBinaryActuator::set(unsigned char * value, unsigned int length, double time) {
+    if (lastAllocated != nullptr) {
+        free(lastAllocated);
+        lastAllocated = nullptr;
+    }
+    return SenMLBinaryRecord::set(value, length, time);
 }

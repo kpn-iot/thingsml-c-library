@@ -74,7 +74,7 @@ void Sha256::init(void) {
     bufferOffset = 0;
 }
 
-void Sha256::initHmac(const uint8_t *key, int keyLength) {
+void Sha256::initHmac(const uint8_t * key, int keyLength) {
     memset(keyBuffer, 0, BLOCK_LENGTH);
     if (keyLength > BLOCK_LENGTH) {
         // Hash long keys

@@ -105,16 +105,7 @@ int SenMLRecord::fieldsToJson() {
     }
     if (this->_updateTime != 0) {
         res += printText(F(",\"ut\":"), 5);
-#ifdef __MBED__
-        char buf[10];
-        sprintf(buf, "%d", this->_updateTime);
-        String val = buf;
-#elif defined(ARDUINO)
-        String val(this->_updateTime);
-#else
-        String val(to_string(this->_updateTime));
-#endif
-        res += printText(val.c_str(), val.length());
+        res += printInt(this->_updateTime);
     }
     return res;
 }

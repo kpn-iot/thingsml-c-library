@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts 
+ * Author: Joseph Verburg, Jan Bogaerts
  *
  * support for bool actuator header
  */
@@ -29,6 +29,16 @@ class SenMLBoolActuator : public SenMLBoolRecord {
         : SenMLBoolRecord(name, unit, false), callback(callback){};
     SenMLBoolActuator(const char *name, SenMLUnit unit, bool value, BOOL_ACTUATOR_SIGNATURE)
         : SenMLBoolRecord(name, unit, value), callback(callback){};
+    SenMLBoolActuator(ThingsMLMeasurementIndex index, BOOL_ACTUATOR_SIGNATURE)
+        : SenMLBoolRecord(index), callback(callback){};
+    SenMLBoolActuator(ThingsMLMeasurementIndex index, bool value, BOOL_ACTUATOR_SIGNATURE)
+        : SenMLBoolRecord(index, value), callback(callback){};
+
+    SenMLBoolActuator(const char *name) : SenMLBoolRecord(name){};
+    SenMLBoolActuator(const char *name, SenMLUnit unit) : SenMLBoolRecord(name, unit){};
+    SenMLBoolActuator(const char *name, SenMLUnit unit, bool value) : SenMLBoolRecord(name, unit, value){};
+    SenMLBoolActuator(ThingsMLMeasurementIndex index) : SenMLBoolRecord(index){};
+    SenMLBoolActuator(ThingsMLMeasurementIndex index, bool value) : SenMLBoolRecord(index, value){};
     ~SenMLBoolActuator(){};
 
   protected:
@@ -36,7 +46,7 @@ class SenMLBoolActuator : public SenMLBoolRecord {
     virtual void actuate(const void *value, int dataLength, SenMLDataType dataType);
 
   private:
-    BOOL_ACTUATOR_SIGNATURE;
+    BOOL_ACTUATOR_SIGNATURE = NULL;
 };
 
 #endif // SENMLBOOLACTUATOR

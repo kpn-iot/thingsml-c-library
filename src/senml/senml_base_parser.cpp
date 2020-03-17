@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts 
+ * Author: Joseph Verburg, Jan Bogaerts
  *
  * base class for all parsers
  */
@@ -42,6 +42,22 @@ void SenMLBaseParser::setCurrentRecord(String &name) {
         SenMLBase *rec = this->curPack->getFirst();
         while (rec) {
             if (rec->isPack() == false && name == ((SenMLRecord *)rec)->getName()) {
+                this->curRec = (SenMLRecord *)rec;
+                return;
+            }
+            rec = rec->getNext();
+        }
+    }
+}
+
+
+void SenMLBaseParser::setCurrentRecord(int thingsmlIndex) {
+    this->curRec = NULL;
+    this->curRecName = "";
+    if (this->curPack) {
+        SenMLBase *rec = this->curPack->getFirst();
+        while (rec) {
+            if (rec->isPack() == false && thingsmlIndex == ((SenMLRecord *)rec)->getIndex()) {
                 this->curRec = (SenMLRecord *)rec;
                 return;
             }

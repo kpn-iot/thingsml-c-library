@@ -55,6 +55,8 @@ class SenMLBinaryRecord : public SenMLRecord {
 
 #endif
 
+    unsigned char * get();
+
     /**
      * renders all the fields to json, without the starting and ending brackets.
      * Inheriters can extend this function if they want to add extra fields to the json output

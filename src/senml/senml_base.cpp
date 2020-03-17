@@ -29,7 +29,7 @@ SenMLBase::~SenMLBase() {
 void SenMLBase::setNext(SenMLBase *value) {
     if (value == NULL) { // if next becomes null and there is a root, then this object became the last in the list, so
                          // let the root know.
-        SenMLPack *root = (SenMLPack *)this->getRoot();
+        SenMLBasePack *root = (SenMLBasePack *)this->getRoot();
         if (root) {
             root->setLast(*this);
         }

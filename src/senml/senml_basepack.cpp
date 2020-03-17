@@ -49,16 +49,16 @@ bool SenMLBasePack::add(SenMLBase &item) {
 }
 
 bool SenMLBasePack::clear() {
-    SenMLBase *item = this->_start;
-    while (item) {
+    SenMLBase *item = this->_end;
+    while (item && item != this) {
         // if it's a pack element, it also needs to clear out it's children.
         if (item->isPack()) {
             ((SenMLBasePack *)item)->clear();
-        }
-        item->setPrev(NULL);
-        SenMLBase *next = item->getNext();
+        } 
         item->setNext(NULL);
-        item = next;
+        SenMLBase * prev = item->getPrev();
+        item->setPrev(NULL);
+        item = prev;
     }
     this->setNext(NULL);
     this->setPrev(NULL);
@@ -140,6 +140,9 @@ int SenMLBasePack::internalToJson() {
     printText(F("["), 1);
     int res = this->contentToJson();
     printText(F("]"), 1);
+    if (_streamCtx->dataAsBlob && canPrint(1)) { // Make sure we zero terminate
+        _streamCtx->data.blob.data[_streamCtx->data.blob.curPos++] = 0x00;
+    }
     return res + 2;
 }
 
@@ -224,6 +227,9 @@ int SenMLBasePack::toCbor(char *dest, int length, SenMLStreamMethod format) {
     this->setupStreamCtx(dest, length, format);
     int res = cbor_serialize_array(this->getArrayLength());
     res += this->contentToCbor();
+    if (canPrint(1)) { // Make sure we zero terminate
+        _streamCtx->data.blob.data[_streamCtx->data.blob.curPos++] = 0x00;
+    }
     return res;
 }
 

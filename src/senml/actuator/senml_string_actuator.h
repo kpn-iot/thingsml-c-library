@@ -29,8 +29,19 @@ class SenMLStringActuator : public SenMLStringRecord {
         : SenMLStringRecord(name, unit, NULL), callback(callback){};
     SenMLStringActuator(const char *name, SenMLUnit unit, const char *value, STRING_ACTUATOR_SIGNATURE)
         : SenMLStringRecord(name, unit, value), callback(callback){};
+    SenMLStringActuator(ThingsMLMeasurementIndex index, STRING_ACTUATOR_SIGNATURE)
+        : SenMLStringRecord(index), callback(callback){};
+    SenMLStringActuator(ThingsMLMeasurementIndex index, const char *value, STRING_ACTUATOR_SIGNATURE)
+        : SenMLStringRecord(index, value), callback(callback){};
+
+    SenMLStringActuator(const char *name) : SenMLStringRecord(name){};
+    SenMLStringActuator(const char *name, SenMLUnit unit) : SenMLStringRecord(name, unit){};
+    SenMLStringActuator(const char *name, SenMLUnit unit, const char *value) : SenMLStringRecord(name, unit, value){};
+    SenMLStringActuator(ThingsMLMeasurementIndex index) : SenMLStringRecord(index){};
+    SenMLStringActuator(ThingsMLMeasurementIndex index, const char *value) : SenMLStringRecord(index, value){};
     ~SenMLStringActuator(){};
 
+    virtual bool set(const char * value, double time = (double)NAN, bool asSum = false);
   protected:
     /**
      * called while parsing a senml message, when the parser found the value for an SenMLJsonListener
@@ -38,7 +49,8 @@ class SenMLStringActuator : public SenMLStringRecord {
     virtual void actuate(const void *value, int dataLength, SenMLDataType dataType);
 
   private:
-    STRING_ACTUATOR_SIGNATURE;
+    STRING_ACTUATOR_SIGNATURE = NULL;
+    char * lastAllocated = nullptr;
 };
 
 #endif // SENMLSTRINGACTUATOR

@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts
+ * Author: Joseph Verburg
  * 
  * tests to check the correct functioning of our builtin sha256 code.
  * 

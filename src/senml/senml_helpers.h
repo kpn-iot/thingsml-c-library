@@ -70,6 +70,13 @@ extern StreamContext *_streamCtx;
 
 /**
  * Helper function for the generation process
+ * write a uint8_t as byte to the stream (_streamCtx).
+ * @param value the value to print
+ */
+int printByte(uint8_t value);
+
+/**
+ * Helper function for the generation process
  * write a int as string to the stream (_streamCtx).
  * @param i the value to print
  */
@@ -106,13 +113,19 @@ int printUnit(SenMLUnit unit);
  */
 int printText(const char *value, int length);
 
+/**
+ * Helper function for the generation process
+ * Determines if the underlying stream has enough space to write length bytes (_streamCtx).
+ * 
+ * always returns true for non buffer backed streams
+ */
+bool canPrint(int length);
+
 #ifdef ARDUINO
 int printText(const __FlashStringHelper *value, int length);
 #else
 #define F(str) str
 #endif
-
-// void printChar(const char value);
 
 /**
  * Helper function for the parsing process

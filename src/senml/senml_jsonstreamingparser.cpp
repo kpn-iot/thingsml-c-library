@@ -59,156 +59,157 @@ void JsonStreamingParser::parse(char c) {
         return;
     }
     switch (state) {
-    case STATE_IN_STRING:
-        if (c == '"') {
-            endString();
-        } else if (c == '\\') {
-            state = STATE_START_ESCAPE;
-        } else if ((c < 0x1f) || (c == 0x7f)) {
-            // throw new RuntimeException("Unescaped control character encountered: " + c + " at position" +
-            // characterCounter);
-        } else {
-            buffer[bufferPos] = c;
-            increaseBufferPointer();
-        }
-        break;
-    case STATE_IN_ARRAY:
-        if (c == ']') {
-            endArray();
-        } else {
-            startValue(c);
-        }
-        break;
-    case STATE_IN_OBJECT:
-        if (c == '}') {
-            endObject();
-        } else if (c == '"') {
-            startKey();
-        } else {
-            // throw new RuntimeException("Start of string expected for object key. Instead got: " + c + " at position"
-            // + characterCounter);
-        }
-        break;
-    case STATE_END_KEY:
-        if (c != ':') {
-            // throw new RuntimeException("Expected ':' after key. Instead got " + c + " at position" +
-            // characterCounter);
-        }
-        state = STATE_AFTER_KEY;
-        break;
-    case STATE_AFTER_KEY:
-        startValue(c);
-        break;
-    case STATE_START_ESCAPE:
-        processEscapeCharacters(c);
-        break;
-    case STATE_UNICODE:
-        processUnicodeCharacter(c);
-        break;
-    case STATE_UNICODE_SURROGATE:
-        unicodeEscapeBuffer[unicodeEscapeBufferPos] = c;
-        unicodeEscapeBufferPos++;
-        if (unicodeEscapeBufferPos == 2) {
-            endUnicodeSurrogateInterstitial();
-        }
-        break;
-    case STATE_AFTER_VALUE: {
-        // not safe for size == 0!!!
-        int within = stack[stackPos - 1];
-        if (within == STACK_OBJECT) {
-            if (c == '}') {
-                endObject();
-            } else if (c == ',') {
-                state = STATE_IN_OBJECT;
-            } else {
-                // throw new RuntimeException("Expected ',' or '}' while parsing object. Got: " + c + ". " +
+        case STATE_IN_STRING:
+            if (c == '"') {
+                endString();
+            } else if (c == '\\') {
+                state = STATE_START_ESCAPE;
+            } else if ((c < 0x1f) || (c == 0x7f)) {
+                // throw new RuntimeException("Unescaped control character encountered: " + c + " at position" +
                 // characterCounter);
+            } else {
+                buffer[bufferPos] = c;
+                increaseBufferPointer();
             }
-        } else if (within == STACK_ARRAY) {
+            break;
+        case STATE_IN_ARRAY:
             if (c == ']') {
                 endArray();
-            } else if (c == ',') {
-                state = STATE_IN_ARRAY;
             } else {
-                // throw new RuntimeException("Expected ',' or ']' while parsing array. Got: " + c + ". " +
+                startValue(c);
+            }
+            break;
+        case STATE_IN_OBJECT:
+            if (c == '}') {
+                endObject();
+            } else if (c == '"') {
+                startKey();
+            } else {
+                // throw new RuntimeException("Start of string expected for object key. Instead got: " + c + " at
+                // position"
+                // + characterCounter);
+            }
+            break;
+        case STATE_END_KEY:
+            if (c != ':') {
+                // throw new RuntimeException("Expected ':' after key. Instead got " + c + " at position" +
                 // characterCounter);
             }
-        } else {
-            // throw new RuntimeException("Finished a literal, but unclear what state to move to. Last state: " +
-            // characterCounter);
-        }
-    } break;
-    case STATE_IN_NUMBER:
-        if (c >= '0' && c <= '9') {
-            buffer[bufferPos] = c;
-            increaseBufferPointer();
-        } else if (c == '.') {
-            if (doesCharArrayContain(buffer, bufferPos, '.')) {
-                // throw new RuntimeException("Cannot have multiple decimal points in a number. " + characterCounter);
-            } else if (doesCharArrayContain(buffer, bufferPos, 'e')) {
-                // throw new RuntimeException("Cannot have a decimal point in an exponent." + characterCounter);
+            state = STATE_AFTER_KEY;
+            break;
+        case STATE_AFTER_KEY:
+            startValue(c);
+            break;
+        case STATE_START_ESCAPE:
+            processEscapeCharacters(c);
+            break;
+        case STATE_UNICODE:
+            processUnicodeCharacter(c);
+            break;
+        case STATE_UNICODE_SURROGATE:
+            unicodeEscapeBuffer[unicodeEscapeBufferPos] = c;
+            unicodeEscapeBufferPos++;
+            if (unicodeEscapeBufferPos == 2) {
+                endUnicodeSurrogateInterstitial();
             }
-            buffer[bufferPos] = c;
-            increaseBufferPointer();
-        } else if (c == 'e' || c == 'E') {
-            if (doesCharArrayContain(buffer, bufferPos, 'e')) {
-                // throw new RuntimeException("Cannot have multiple exponents in a number. " + characterCounter);
-            }
-            buffer[bufferPos] = c;
-            increaseBufferPointer();
-        } else if (c == '+' || c == '-') {
-            char last = buffer[bufferPos - 1];
-            if (!(last == 'e' || last == 'E')) {
-                // throw new RuntimeException("Can only have '+' or '-' after the 'e' or 'E' in a number." +
+            break;
+        case STATE_AFTER_VALUE: {
+            // not safe for size == 0!!!
+            int within = stack[stackPos - 1];
+            if (within == STACK_OBJECT) {
+                if (c == '}') {
+                    endObject();
+                } else if (c == ',') {
+                    state = STATE_IN_OBJECT;
+                } else {
+                    // throw new RuntimeException("Expected ',' or '}' while parsing object. Got: " + c + ". " +
+                    // characterCounter);
+                }
+            } else if (within == STACK_ARRAY) {
+                if (c == ']') {
+                    endArray();
+                } else if (c == ',') {
+                    state = STATE_IN_ARRAY;
+                } else {
+                    // throw new RuntimeException("Expected ',' or ']' while parsing array. Got: " + c + ". " +
+                    // characterCounter);
+                }
+            } else {
+                // throw new RuntimeException("Finished a literal, but unclear what state to move to. Last state: " +
                 // characterCounter);
             }
+        } break;
+        case STATE_IN_NUMBER:
+            if (c >= '0' && c <= '9') {
+                buffer[bufferPos] = c;
+                increaseBufferPointer();
+            } else if (c == '.') {
+                if (doesCharArrayContain(buffer, bufferPos, '.')) {
+                    // throw new RuntimeException("Cannot have multiple decimal points in a number. " +
+                    // characterCounter);
+                } else if (doesCharArrayContain(buffer, bufferPos, 'e')) {
+                    // throw new RuntimeException("Cannot have a decimal point in an exponent." + characterCounter);
+                }
+                buffer[bufferPos] = c;
+                increaseBufferPointer();
+            } else if (c == 'e' || c == 'E') {
+                if (doesCharArrayContain(buffer, bufferPos, 'e')) {
+                    // throw new RuntimeException("Cannot have multiple exponents in a number. " + characterCounter);
+                }
+                buffer[bufferPos] = c;
+                increaseBufferPointer();
+            } else if (c == '+' || c == '-') {
+                char last = buffer[bufferPos - 1];
+                if (!(last == 'e' || last == 'E')) {
+                    // throw new RuntimeException("Can only have '+' or '-' after the 'e' or 'E' in a number." +
+                    // characterCounter);
+                }
+                buffer[bufferPos] = c;
+                increaseBufferPointer();
+            } else {
+                endNumber();
+                // we have consumed one beyond the end of the number
+                parse(c);
+            }
+            break;
+        case STATE_IN_TRUE:
             buffer[bufferPos] = c;
             increaseBufferPointer();
-        } else {
-            endNumber();
-            // we have consumed one beyond the end of the number
-            parse(c);
-        }
-        break;
-    case STATE_IN_TRUE:
-        buffer[bufferPos] = c;
-        increaseBufferPointer();
-        if (bufferPos == 4) {
-            endTrue();
-        }
-        break;
-    case STATE_IN_FALSE:
-        buffer[bufferPos] = c;
-        increaseBufferPointer();
-        if (bufferPos == 5) {
-            endFalse();
-        }
-        break;
-    case STATE_IN_NULL:
-        buffer[bufferPos] = c;
-        increaseBufferPointer();
-        if (bufferPos == 4) {
-            endNull();
-        }
-        break;
-    case STATE_START_DOCUMENT:
-        // myListener->startDocument();
-        if (c == '[') {
-            startArray();
-        } else if (c == '{') {
-            startObject();
-        } else {
-            // throw new ParsingError($this->_line_number,
-            // $this->_char_number,
-            // "Document must start with object or array.");
-        }
-        break;
-        // case STATE_DONE:
-        // throw new ParsingError($this->_line_number, $this->_char_number,
-        // "Expected end of document.");
-        // default:
-        // throw new ParsingError($this->_line_number, $this->_char_number,
-        // "Internal error. Reached an unknown state: ".$this->_state);
+            if (bufferPos == 4) {
+                endTrue();
+            }
+            break;
+        case STATE_IN_FALSE:
+            buffer[bufferPos] = c;
+            increaseBufferPointer();
+            if (bufferPos == 5) {
+                endFalse();
+            }
+            break;
+        case STATE_IN_NULL:
+            buffer[bufferPos] = c;
+            increaseBufferPointer();
+            if (bufferPos == 4) {
+                endNull();
+            }
+            break;
+        case STATE_START_DOCUMENT:
+            if (c == '[') {
+                startArray();
+            } else if (c == '{') {
+                startObject();
+            } else {
+                // throw new ParsingError($this->_line_number,
+                // $this->_char_number,
+                // "Document must start with object or array.");
+            }
+            break;
+            // case STATE_DONE:
+            // throw new ParsingError($this->_line_number, $this->_char_number,
+            // "Expected end of document.");
+            // default:
+            // throw new ParsingError($this->_line_number, $this->_char_number,
+            // "Internal error. Reached an unknown state: ".$this->_state);
     }
     characterCounter++;
 }
@@ -273,7 +274,6 @@ void JsonStreamingParser::endArray() {
         // throw new ParsingError($this->_line_number, $this->_char_number,
         // "Unexpected end of array encountered.");
     }
-    // myListener->endArray();
     state = STATE_AFTER_VALUE;
     if (stackPos == 0) {
         endDocument();
@@ -293,7 +293,6 @@ void JsonStreamingParser::endObject() {
         // throw new ParsingError($this->_line_number, $this->_char_number,
         // "Unexpected end of object encountered.");
     }
-    // myListener->endObject();
     state = STATE_AFTER_VALUE;
     if (stackPos == 0) {
         endDocument();
@@ -350,26 +349,6 @@ void JsonStreamingParser::processUnicodeCharacter(char c) {
         int codepoint = getHexArrayAsDecimal(unicodeBuffer, unicodeBufferPos);
         endUnicodeCharacter(codepoint);
         return;
-        /*if (codepoint >= 0xD800 && codepoint < 0xDC00) {
-          unicodeHighSurrogate = codepoint;
-          unicodeBufferPos = 0;
-          state = STATE_UNICODE_SURROGATE;
-        } else if (codepoint >= 0xDC00 && codepoint <= 0xDFFF) {
-          if (unicodeHighSurrogate == -1) {
-            // throw new ParsingError($this->_line_number,
-            // $this->_char_number,
-            // "Missing high surrogate for Unicode low surrogate.");
-          }
-          int combinedCodePoint = ((unicodeHighSurrogate - 0xD800) * 0x400) + (codepoint - 0xDC00) + 0x10000;
-          endUnicodeCharacter(combinedCodePoint);
-        } else if (unicodeHighSurrogate != -1) {
-          // throw new ParsingError($this->_line_number,
-          // $this->_char_number,
-          // "Invalid low surrogate following Unicode high surrogate.");
-          endUnicodeCharacter(codepoint);
-        } else {
-          endUnicodeCharacter(codepoint);
-        }*/
     }
 }
 bool JsonStreamingParser::isHexCharacter(char c) {
@@ -417,13 +396,6 @@ void JsonStreamingParser::endUnicodeSurrogateInterstitial() {
 void JsonStreamingParser::endNumber() {
     buffer[bufferPos] = '\0';
     String value = String(buffer);
-    // float result = 0.0;
-    // if (doesCharArrayContain(buffer, bufferPos, '.')) {
-    //  result = value.toFloat();
-    //} else {
-    // needed special treatment in php, maybe not in Java and c
-    //  result = value.toFloat();
-    //}
     myListener->value(value.c_str());
     bufferPos = 0;
     state = STATE_AFTER_VALUE;
@@ -439,7 +411,6 @@ int JsonStreamingParser::convertDecimalBufferToInt(char myArray[], int length) {
 }
 
 void JsonStreamingParser::endDocument() {
-    // myListener->endDocument();
     state = STATE_DONE;
 }
 
@@ -447,10 +418,7 @@ void JsonStreamingParser::endTrue() {
     buffer[bufferPos] = '\0';
     String value = String(buffer);
     if (value == "true") {
-
-    } else {
-        // throw new ParsingError($this->_line_number, $this->_char_number,
-        // "Expected 'true'. Got: ".$true);
+        myListener->value("true");
     }
     bufferPos = 0;
     state = STATE_AFTER_VALUE;
@@ -461,9 +429,6 @@ void JsonStreamingParser::endFalse() {
     String value = String(buffer);
     if (value == "false") {
         myListener->value("false");
-    } else {
-        // throw new ParsingError($this->_line_number, $this->_char_number,
-        // "Expected 'true'. Got: ".$true);
     }
     bufferPos = 0;
     state = STATE_AFTER_VALUE;
@@ -474,23 +439,18 @@ void JsonStreamingParser::endNull() {
     String value = String(buffer);
     if (value == "null") {
         myListener->value("null");
-    } else {
-        // throw new ParsingError($this->_line_number, $this->_char_number,
-        // "Expected 'true'. Got: ".$true);
     }
     bufferPos = 0;
     state = STATE_AFTER_VALUE;
 }
 
 void JsonStreamingParser::startArray() {
-    // myListener->startArray();
     state = STATE_IN_ARRAY;
     stack[stackPos] = STACK_ARRAY;
     stackPos++;
 }
 
 void JsonStreamingParser::startObject() {
-    // myListener->startObject();
     state = STATE_IN_OBJECT;
     stack[stackPos] = STACK_OBJECT;
     stackPos++;

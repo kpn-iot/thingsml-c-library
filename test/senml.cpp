@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts
+ * Author: Joseph Verburg
  * 
  * tests to check the correct functioning of our senml/thingsml encoder in json and cbor.
  * 
@@ -401,4 +401,55 @@ TEST(thingsml, single_device_cbor_extended) {
     int len = doc.toCbor(output, 200, SENML_HEX);
     EXPECT_EQ(95, len);
     EXPECT_STREQ("86A5236362697422F94900173606F93C000847686F69686F6900A3173206F9400004F5A3173106F9420002FB3FF4CCCCCCCCCCCDA3172206F9440002FA34000000A3173706F94580020AA3172E06FB40193333333333340366686169686169", output);
+}
+
+
+TEST(senml, proper_zero_terminate_json) {
+    SenMLPack doc;
+
+    doc.setBaseTime(1);
+
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    intrec.set(10);
+
+    SenMLIntRecord intrec2(THINGSML_TEMPERATURE);
+    intrec2.set(15);
+
+    doc.add(intrec);
+    doc.add(intrec2);
+
+    char output[200] = {0};
+    doc.toJson(output, 200);
+
+    doc.clear();
+    doc.add(intrec);
+
+    int len = doc.toJson(output, 200);
+    EXPECT_EQ(33, len);
+    EXPECT_STREQ("[{\"bt\":1.000000,\"i_\":-24,\"v\":10}]", output);
+}
+
+TEST(senml, proper_zero_terminate_cbor) {
+    SenMLPack doc;
+
+    doc.setBaseTime(1);
+
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    intrec.set(10);
+
+    SenMLIntRecord intrec2(THINGSML_TEMPERATURE);
+    intrec2.set(15);
+
+    doc.add(intrec);
+    doc.add(intrec2);
+
+    char output[200] = {0};
+    doc.toCbor(output, 200, SENML_HEX);
+
+    doc.clear();
+    doc.add(intrec);
+
+    int len = doc.toCbor(output, 200, SENML_HEX);
+    EXPECT_EQ(10, len);
+    EXPECT_STREQ("81A322F93C001737020A", output);
 }

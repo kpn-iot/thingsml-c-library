@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts 
+ * Author: Joseph Verburg, Jan Bogaerts
  *
  * support for float actuators
  */
@@ -26,6 +26,7 @@ void SenMLFloatActuator::actuate(const void *value, int dataLength, SenMLDataTyp
         if (this->callback) {
             this->callback(*((float *)value));
         }
-    } else
+    } else {
         log_debug(F("invalid type"));
+    }
 }

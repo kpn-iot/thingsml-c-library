@@ -6,7 +6,7 @@
  *
  * (c) 2020 KPN
  * License: MIT License.
- * Author: Joseph Verburg, Jan Bogaerts
+ * Author: Joseph Verburg
  * 
  * test for checking the correct functioning of the builtin cbor encoder/decoder
  * 

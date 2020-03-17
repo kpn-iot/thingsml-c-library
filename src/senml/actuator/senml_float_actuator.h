@@ -29,6 +29,16 @@ class SenMLFloatActuator : public SenMLFloatRecord {
         : SenMLFloatRecord(name, unit, 0.0), callback(callback){};
     SenMLFloatActuator(const char *name, SenMLUnit unit, float value, FLOAT_ACTUATOR_SIGNATURE)
         : SenMLFloatRecord(name, unit, value), callback(callback){};
+    SenMLFloatActuator(ThingsMLMeasurementIndex index, FLOAT_ACTUATOR_SIGNATURE)
+        : SenMLFloatRecord(index), callback(callback){};
+    SenMLFloatActuator(ThingsMLMeasurementIndex index, float value, FLOAT_ACTUATOR_SIGNATURE)
+        : SenMLFloatRecord(index, value), callback(callback){};
+
+    SenMLFloatActuator(const char *name) : SenMLFloatRecord(name){};
+    SenMLFloatActuator(const char *name, SenMLUnit unit) : SenMLFloatRecord(name, unit){};
+    SenMLFloatActuator(const char *name, SenMLUnit unit, float value) : SenMLFloatRecord(name, unit, value){};
+    SenMLFloatActuator(ThingsMLMeasurementIndex index) : SenMLFloatRecord(index){};
+    SenMLFloatActuator(ThingsMLMeasurementIndex index, float value) : SenMLFloatRecord(index, value){};
     ~SenMLFloatActuator(){};
 
   protected:
@@ -36,7 +46,7 @@ class SenMLFloatActuator : public SenMLFloatRecord {
     virtual void actuate(const void *value, int dataLength, SenMLDataType dataType);
 
   private:
-    FLOAT_ACTUATOR_SIGNATURE;
+    FLOAT_ACTUATOR_SIGNATURE = NULL;
 };
 
 #endif // SENMLFLOATACTUATOR

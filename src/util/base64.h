@@ -16,19 +16,6 @@ int base64_dec_len(char *input, int inputLen) {
     return ((6 * inputLen) / 8) - numEq;
 }
 
-#elif defined(__MBED__)
-
-#include <base64.h>
-int base64_dec_len(char *input, int inputLen) {
-    int i = 0;
-    int numEq = 0;
-    for (i = inputLen - 1; input[i] == '='; i--) {
-        numEq++;
-    }
-
-    return ((6 * inputLen) / 8) - numEq;
-}
-
 #else
 
 #define THINGSML_LOCAL_BASE64

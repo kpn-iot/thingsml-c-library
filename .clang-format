@@ -8,6 +8,7 @@ AllowShortCaseLabelsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: false
 AllowShortIfStatementsOnASingleLine: false
 BreakBeforeBraces: Custom
+IndentCaseLabels: true
 BraceWrapping:
   AfterEnum: false
   AfterStruct: false

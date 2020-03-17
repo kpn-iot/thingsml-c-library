@@ -50,7 +50,7 @@ See more at http://blog.squix.ch and https://github.com/squix78/json-streaming-p
 #define STACK_KEY 2
 #define STACK_STRING 3
 
-#define BUFFER_MAX_LENGTH 512
+#define BUFFER_MAX_LENGTH 128
 
 /**
  * Internal helper class for parsing json data.

@@ -17,11 +17,25 @@
 
 void SenMLStringActuator::actuate(const void *value, int dataLength, SenMLDataType dataType) {
     if (dataType == SENML_TYPE_STRING || dataType == CBOR_TYPE_STRING) {
-        this->set((char *)value);
-        if (this->callback) {
-            this->callback((char *)value);
+        
+        char * copy = (char *) malloc(dataLength + 1);
+        copy[dataLength] = 0;
+        memcpy(copy, value, dataLength);
+        set((char *)copy);
+        lastAllocated = copy;
+
+        if (callback) {
+            callback((char *)copy);
         }
     } else {
         log_debug(F("invalid type"));
     }
+}
+
+bool SenMLStringActuator::set(const char * value, double time, bool asSum) {
+    if (lastAllocated != nullptr) {
+        free(lastAllocated);
+        lastAllocated = nullptr;
+    }
+    return SenMLStringRecord::set(value, time, asSum);
 }

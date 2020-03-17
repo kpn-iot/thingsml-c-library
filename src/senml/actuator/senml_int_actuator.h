@@ -29,6 +29,16 @@ class SenMLIntActuator : public SenMLIntRecord {
         : SenMLIntRecord(name, unit, 0), callback(callback){};
     SenMLIntActuator(const char *name, SenMLUnit unit, int value, INT_ACTUATOR_SIGNATURE)
         : SenMLIntRecord(name, unit, value), callback(callback){};
+    SenMLIntActuator(ThingsMLMeasurementIndex index, INT_ACTUATOR_SIGNATURE)
+        : SenMLIntRecord(index), callback(callback){};
+    SenMLIntActuator(ThingsMLMeasurementIndex index, int value, INT_ACTUATOR_SIGNATURE)
+        : SenMLIntRecord(index, value), callback(callback){};
+
+    SenMLIntActuator(const char *name) : SenMLIntRecord(name){};
+    SenMLIntActuator(const char *name, SenMLUnit unit) : SenMLIntRecord(name, unit){};
+    SenMLIntActuator(const char *name, SenMLUnit unit, int value) : SenMLIntRecord(name, unit, value){};
+    SenMLIntActuator(ThingsMLMeasurementIndex index) : SenMLIntRecord(index){};
+    SenMLIntActuator(ThingsMLMeasurementIndex index, int value) : SenMLIntRecord(index, value){};
     ~SenMLIntActuator(){};
 
   protected:
@@ -38,7 +48,7 @@ class SenMLIntActuator : public SenMLIntRecord {
     virtual void actuate(const void *value, int dataLength, SenMLDataType dataType);
 
   private:
-    INT_ACTUATOR_SIGNATURE;
+    INT_ACTUATOR_SIGNATURE = NULL;
 };
 
 #endif // SENMLINTACTUATOR

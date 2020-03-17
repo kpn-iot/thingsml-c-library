@@ -29,22 +29,24 @@ class SenMLBinaryActuator : public SenMLBinaryRecord {
         : SenMLBinaryRecord(name, SENML_UNIT_NONE), callback(callback){};
     SenMLBinaryActuator(const char *name, SenMLUnit unit, BINARY_ACTUATOR_SIGNATURE)
         : SenMLBinaryRecord(name, unit), callback(callback){};
+    SenMLBinaryActuator(ThingsMLMeasurementIndex index, BINARY_ACTUATOR_SIGNATURE)
+        : SenMLBinaryRecord(index), callback(callback){};
+
+    SenMLBinaryActuator(const char *name) : SenMLBinaryRecord(name){};
+    SenMLBinaryActuator(const char *name, SenMLUnit unit) : SenMLBinaryRecord(name, unit){};
+    SenMLBinaryActuator(ThingsMLMeasurementIndex index) : SenMLBinaryRecord(index){};
+
     ~SenMLBinaryActuator(){};
+
+    virtual bool set(unsigned char *value, unsigned int length, double time = NAN);
 
   protected:
     // called while parsing a senml message, when the parser found the value for an SenMLJsonListener
     virtual void actuate(const void *value, int dataLength, SenMLDataType dataType);
 
-    // called while parsing a senml message, when the parser found the value for an SenMLJsonListener
-    // the actual value has already been converted to it's appropriate type
-    inline void actuate(const char *value, int length) {
-        this->set((unsigned char *)value, length);
-        if (this->callback)
-            this->callback((unsigned char *)value, length);
-    };
-
   private:
-    BINARY_ACTUATOR_SIGNATURE;
+    BINARY_ACTUATOR_SIGNATURE = NULL;
+    unsigned char * lastAllocated = nullptr;
 };
 
 #endif // SENMLBINARYACTUATOR
