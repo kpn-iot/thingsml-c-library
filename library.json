@@ -1,0 +1,21 @@
+{
+    "name": "ThingsML",
+    "version": "1.0.1",
+    "description": "Thingsml Encoder/Decoder, for use in LoraWAN and M2M networks",
+    "keywords": "LoRa,ThingsML,SenML,KPN,IoT,LoRaWAN",
+    "authors": [
+        {
+            "name": "Joseph Verburg",
+            "email": "joseph.verburg@kpn.com",
+            "maintainer": true
+        },
+        {
+            "name": "Paul Marcelis",
+            "email": "paul.marcelis@kpn.com"
+        }
+    ],
+    "repository": {
+        "url": "https://github.com/kpn-iot/thingsml-c-library"
+    },
+    "license": "MIT"
+}

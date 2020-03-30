@@ -1,0 +1,27 @@
+# Syntax Coloring Map For ThingsML
+
+# Datatypes (KEYWORD1)
+thingsml	KEYWORD1
+SenMLSimplePack	KEYWORD1
+SenMLPack	KEYWORD1
+SenMLDoublePack	KEYWORD1
+SenMLIntPack	KEYWORD1
+SenMLDoubleRecord	KEYWORD1
+SenMLIntRecord	KEYWORD1
+SenMLFloatRecord	KEYWORD1
+SenMLHalfFloatRecord	KEYWORD1
+SenMLStringRecord	KEYWORD1
+SenMLBoolRecord	KEYWORD1
+SenMLBinaryRecord	KEYWORD1
+SenMLIntActuator	KEYWORD1
+SenMLFloatActuator	KEYWORD1
+SenMLStringActuator	KEYWORD1
+SenMLBoolActuator	KEYWORD1
+SenMLBinaryActuator	KEYWORD1
+
+# Methods and Functions (KEYWORD2)
+ThingsML::httpPost  	KEYWORD2
+
+# Instances (KEYWORD2)
+
+# Constants (LITERAL1)
