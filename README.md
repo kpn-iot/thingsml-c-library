@@ -5,7 +5,7 @@ in both json and [cbor format](https://tools.ietf.org/html/rfc7049).
 
 # Documentation
 
-Read the docs [here](https://kpniot.github.io/thingsml-c-library/)
+Read the docs [here](https://kpn-iot.github.io/thingsml-c-library/)
 
 # Key features
 
