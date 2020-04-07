@@ -214,7 +214,7 @@ void setup() {
 char buf[100] = {0};
 
 void loop() {
-    device.toJson(buf, 100, SENML_HEX);
+    device.toCbor(buf, 100, SENML_HEX);
     sendPayload(false, 1, buf);
     delay(300000);
 }
