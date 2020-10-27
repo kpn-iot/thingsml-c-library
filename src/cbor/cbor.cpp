@@ -96,47 +96,39 @@ inline double binary_to_double(uint64_t x)
 }
 
 inline uint16_t half_float_to_binary(float val) {
-    //  union u {
-    //     uint32_t ui;
-    //     float f;
-    // } Data;
-    // u d;
-    // d.f = val;
-    // uint32_t t1;
-    // uint32_t t2;
-    // uint32_t t3;
-
-    // t1 = d.ui & 0x7fffffff;                 // Non-sign bits
-    // t2 = d.ui & 0x80000000;                 // Sign bit
-    // t3 = d.ui & 0x7f800000;                 // Exponent
-    
-    // t1 >>= 13;                             // Align mantissa on MSB
-    // t2 >>= 16;                             // Shift sign bit into position
-
-    // t1 -= 0x1c000;                         // Adjust bias
-
-    // t1 = (t3 > 0x38800000) ? 0 : t1;       // Flush-to-zero
-    // t1 = (t3 < 0x8e000000) ? 0x7bff : t1;  // Clamp-to-max
-    // t1 = (t3 == 0 ? 0 : t1);               // Denormals-as-zero
-
-    // t1 |= t2;                              // Re-insert sign bit
-
-    // return (uint16_t)(t1 & 0xFFFF);
-
     union u {
         uint32_t ui;
         float f;
     } Data;
     u d;
     d.f = val;
-    uint16_t fltInt16;
+    /*
+        Converting 1.5 example
+        f32
+        0 (sign)
+        01111111 (exponent) 
+        1000 0000 0000 0000 0000 000 (fraction)
+        f16
+        0
+        01111
+        1000 0000 00
+    */
+    uint32_t t1 = d.ui & 0x007FFFFF; // Fraction
+    uint32_t t2 = d.ui & 0x80000000; // Sign bit
+    uint32_t t3 = d.ui & 0x7F800000; // Exponent
 
-    fltInt16 = (d.ui >> 31) << 5;
-    uint16_t tmp = (d.ui >> 23) & 0xff;
-    tmp = (tmp - 0x70) & ((unsigned int)((int)(0x70 - tmp) >> 4) >> 27);
-    fltInt16 = (fltInt16 | tmp) << 10;
-    fltInt16 |= (d.ui >> 13) & 0x3ff;
-    return fltInt16;
+    t1 >>= 13; // Scale fraction down (this might drop some precision)
+    t2 >>= 16; // Move sign bit into position
+    
+    if (t3 != 0) {          // Preserve special numbers
+        t3 >>= 13;          // Move into position
+        t3 -= (112) << 10;  // Adjust for bias difference (-127 + 15)
+        t3 &= 0x00007C00;   // Clamp value into place
+    }
+
+    t1 |= t2;
+    t1 |= t3;
+    return (uint16_t) (t1 & 0xFFFF);
 }
 
 inline float binary_to_half_float(uint16_t val) {
@@ -144,18 +136,17 @@ inline float binary_to_half_float(uint16_t val) {
     uint32_t t2;
     uint32_t t3;
 
-    t1 = val & 0x7fff;                       // Non-sign bits
-    t2 = val & 0x8000;                       // Sign bit
-    t3 = val & 0x7c00;                       // Exponent
+    t1 = val & 0x7FFF; // Fraction
+    t2 = val & 0x8000; // Sign bit
+    t3 = val & 0x7C00; // Exponent
     
-    t1 <<= 13;                              // Align mantissa on MSB
-    t2 <<= 16;                              // Shift sign bit into position
+    t1 <<= 13;          // Align mantissa on MSB
+    t2 <<= 16;          // Shift sign bit into position
 
-    t1 += 0x38000000;                       // Adjust bias
+    t1 += 0x38000000;   // Adjust bias
 
-    t1 = (t3 == 0 ? 0 : t1);                // Denormals-as-zero
-
-    t1 |= t2;                               // Re-insert sign bit
+    t1 = (t3 == 0 ? 0 : t1); // Denormals-as-zero
+    t1 |= t2;           // Re-insert sign bit
 
     union u {
         uint32_t ui;
@@ -206,31 +197,8 @@ bool is_lossless_to_float(double value) {
  */
 double decode_float_half(unsigned char *halfp)
 {
-    int half = (halfp[0] << 8) + halfp[1];
-    int exp = (half >> 10) & 0x1f;
-    int mant = half & 0x3ff;
-    double val;
-
-	#ifdef __MBED__
-	if (exp == 0) {
-        val = ldexp((double)mant, -24);
-    }
-    else if (exp != 31) {
-        val = ldexp((double)(mant + 1024), exp - 25);
-    }
-	#else
-    if (exp == 0) {
-        val = ldexp(mant, -24);
-    }
-    else if (exp != 31) {
-        val = ldexp(mant + 1024, exp - 25);
-    }
-	#endif
-    else {
-        val = mant == 0 ? INFINITY : NAN;
-    }
-
-    return (half & 0x8000) ? -val : val;
+    uint16_t data = (halfp[0] << 8) | halfp[1];
+    return binary_to_half_float(data);
 }
 
 /**
@@ -292,7 +260,7 @@ size_t decode_int(uint64_t *val)
     *val = 0; /* clear val first */
 
     unsigned char in = readChar();
-    unsigned char bytes_follow = uint_bytes_follow(in);
+    unsigned char bytes_follow = uint_bytes_follow(in & CBOR_INFO_MASK);
 
     switch (bytes_follow) {
         case 0:

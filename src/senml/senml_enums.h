@@ -156,6 +156,7 @@ enum SenMLUnit {
 #define SENML_NAME_TEMPERATURE "temperature"
 #define SENML_NAME_HUMIDITY "humidity"
 #define SENML_NAME_LATTITUDE "latitude"
+#define SENML_NAME_LATITUDE "latitude"
 #define SENML_NAME_LONGITUDE "longitude"
 #define SENML_NAME_ALTITUDE "altitude"
 #define SENML_NAME_POWER "power"

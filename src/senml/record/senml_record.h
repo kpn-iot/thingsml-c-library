@@ -115,7 +115,7 @@ class SenMLRecord : public SenMLBase {
      * Get the expected timestamp at which this record will be updated again. NaN represents 'no time assigned'.
      * @returns a unix epoch time, relative to the parent SenMLPack object's base time (if any).
      */
-    inline int getUpdateTime() {
+    inline double getUpdateTime() {
         return this->_updateTime;
     }
 
@@ -202,7 +202,7 @@ class SenMLRecord : public SenMLBase {
 
   private:
     double _time;
-    int _updateTime;
+    double _updateTime;
     const char *_name = NULL;
     ThingsMLMeasurementIndex _index;
     SenMLUnit _unit;

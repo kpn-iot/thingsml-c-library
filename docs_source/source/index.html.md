@@ -34,6 +34,7 @@ The library has been tested on the following platforms with their respective dev
     - Arduino Uno
     - [Arduino MKR WAN 1300](https://store.arduino.cc/arduino-mkr-wan-1300-lora-connectivity-1414)
     - [Arduino MKR GSM 1400](https://store.arduino.cc/arduino-mkr-gsm-1400-1415)
+    - [Sodaq Sara AFF](https://support.sodaq.com/Boards/Sara_AFF/)
 - Mbed OS
     - [STM32 Nucleo-L152RE](https://www.st.com/en/evaluation-tools/nucleo-l152re.html)
 - PC (windows/linux via [Bazel](https://bazel.build/))

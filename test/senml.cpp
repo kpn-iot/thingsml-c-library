@@ -230,6 +230,26 @@ TEST(senml, invalid_json_only_base_time) {
     EXPECT_STREQ("[{\"bt\":1.000000,\"i_\":-24,\"v\":10}]", output);
 }
 
+TEST(senml, invalid_json_only_update_time) {
+    SenMLPack doc;
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    intrec.set(10);
+    doc.add(intrec);
+    intrec.setUpdateTime(10);
+
+    char output[200] = {0};
+    int len = doc.toJson(output, 200);
+    EXPECT_EQ(34, len);
+    EXPECT_STREQ("[{\"i_\":-24,\"ut\":10.000000,\"v\":10}]", output);
+
+    doc.setBaseTime(10);
+    intrec.setUpdateTime(20);
+
+    len = doc.toJson(output, 200);
+    EXPECT_EQ(49, len);
+    EXPECT_STREQ("[{\"bt\":10.000000,\"i_\":-24,\"ut\":10.000000,\"v\":10}]", output);
+}
+
 TEST(senml, simple_pack_json) {
     SenMLSimplePack doc;
 

@@ -104,8 +104,8 @@ int SenMLRecord::fieldsToJson() {
         res += printText(F("\""), 1);
     }
     if (this->_updateTime != 0) {
-        res += printText(F(",\"ut\":"), 5);
-        res += printInt(this->_updateTime);
+        res += printText(F(",\"ut\":"), 6);
+        res += printDouble(this->_updateTime, SENML_MAX_DOUBLE_PRECISION);
     }
     return res;
 }

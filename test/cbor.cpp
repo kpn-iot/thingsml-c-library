@@ -18,6 +18,7 @@
 #include "../src/senml/senml_helpers.h"
 #include "gtest/gtest.h"
 
+
 TEST(cbor, serialize_majortype0) {
     StreamContext ctx;
     ctx.dataAsBlob = true;
@@ -254,12 +255,179 @@ TEST(cbor, serialize_majortype7double) {
     EXPECT_STREQ("FB4072C1999999999A", buf);
 }
 
+
+TEST(cbor, deserialize_majortype0) {
+    StreamContext ctx;
+    ctx.dataAsBlob = true;
+    SenmlMemoryData memdata;
+    memdata.length = 200;
+    memdata.curPos = 0;
+    SenmlData data;
+    data.blob = memdata;
+    ctx.data = data;
+    ctx.format = SENML_HEX;
+
+    _streamCtx = &ctx;
+
+    uint64_t num;
+
+    ctx.data.blob.data = "05";
+    cbor_deserialize_uint64_t(&num);
+    EXPECT_EQ(5, num);
+    
+    ctx.data.blob.data = "181E";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_uint64_t(&num);
+    EXPECT_EQ(30, num);
+    
+    ctx.data.blob.data = "19012C";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_uint64_t(&num);
+    EXPECT_EQ(300, num);
+    
+    ctx.data.blob.data = "1A000493E0";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_uint64_t(&num);
+    EXPECT_EQ(300000, num);
+    
+    ctx.data.blob.data = "1A7FF89EC0";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_uint64_t(&num);
+    EXPECT_EQ(2147000000, num);
+}
+
+TEST(cbor, deserialize_majortype1) {
+    StreamContext ctx;
+    ctx.dataAsBlob = true;
+    SenmlMemoryData memdata;
+    memdata.length = 200;
+    memdata.curPos = 0;
+    SenmlData data;
+    data.blob = memdata;
+    ctx.data = data;
+    ctx.format = SENML_HEX;
+
+    _streamCtx = &ctx;
+
+    int64_t num = 0;
+
+    ctx.data.blob.data = "24";
+    cbor_deserialize_int64_t(&num);
+    EXPECT_EQ(-5, num);
+
+    ctx.data.blob.data = "381D";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_int64_t(&num);
+    EXPECT_EQ(-30, num);
+    
+    ctx.data.blob.data = "39012B";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_int64_t(&num);
+    EXPECT_EQ(-300, num);
+    
+    ctx.data.blob.data = "3A000493DF";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_int64_t(&num);
+    EXPECT_EQ(-300000, num);
+    
+    ctx.data.blob.data = "3A7FF89EBF";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_int64_t(&num);
+    EXPECT_EQ(-2147000000, num);
+}
+
+TEST(cbor, deserialize_majortype7halffloat) {
+    StreamContext ctx;
+    ctx.dataAsBlob = true;
+    SenmlMemoryData memdata;
+    memdata.length = 200;
+    memdata.curPos = 0;
+    SenmlData data;
+    data.blob = memdata;
+    ctx.data = data;
+    ctx.format = SENML_HEX;
+
+    _streamCtx = &ctx;
+
+    float num;
+    
+    ctx.data.blob.data = "F93E00";
+    cbor_deserialize_float_half(&num);
+    EXPECT_EQ(1.5, num);
+
+    ctx.data.blob.data = "F93FFF";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_float_half(&num);
+    EXPECT_EQ(1.9990234375, num);
+
+    ctx.data.blob.data = "F907FF";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_float_half(&num);
+    EXPECT_EQ(0.00012201070785522461, num);
+    
+    ctx.data.blob.data = "F95CB0";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_float_half(&num); 
+    EXPECT_EQ(300, num);
+}
+
+TEST(cbor, deserialize_majortype7float) {
+    StreamContext ctx;
+    ctx.dataAsBlob = true;
+    SenmlMemoryData memdata;
+    memdata.length = 200;
+    memdata.curPos = 0;
+    SenmlData data;
+    data.blob = memdata;
+    ctx.data = data;
+    ctx.format = SENML_HEX;
+
+    _streamCtx = &ctx;
+
+    float num;
+    
+    ctx.data.blob.data = "FA3F8CCCCD";
+    cbor_deserialize_float(&num);
+    EXPECT_EQ(1.100000023841858, num);
+    
+    ctx.data.blob.data = "FA43960CCD";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_float(&num); 
+    EXPECT_EQ(300.1000061035156, num);
+}
+
+TEST(cbor, deserialize_majortype7double) {
+    StreamContext ctx;
+    ctx.dataAsBlob = true;
+    SenmlMemoryData memdata;
+    memdata.length = 200;
+    memdata.curPos = 0;
+    SenmlData data;
+    data.blob = memdata;
+    ctx.data = data;
+    ctx.format = SENML_HEX;
+
+    _streamCtx = &ctx;
+
+    double num;
+    
+    ctx.data.blob.data = "FB3FF199999999999A";
+    cbor_deserialize_double(&num);
+    EXPECT_EQ(1.1, num);
+    
+    ctx.data.blob.data = "FB4072C1999999999A";
+    ctx.data.blob.curPos = 0;
+    cbor_deserialize_double(&num); 
+    EXPECT_EQ(300.1, num);
+}
+
 TEST(cbor, is_lossless) {
     EXPECT_EQ(true, is_lossless_to_half_float(0.5));
     EXPECT_EQ(true, is_lossless_to_half_float(0.001953125));
     EXPECT_EQ(false, is_lossless_to_half_float(0.00000011920928955078125));
     EXPECT_EQ(false, is_lossless_to_half_float(300.1));
-    // EXPECT_EQ(true, is_lossless_to_half_float(1.00048828125‬));
+    EXPECT_EQ(true, is_lossless_to_half_float(1.9990234375));
+    EXPECT_EQ(true, is_lossless_to_half_float(0.00012201070785522461));
 
     EXPECT_EQ(true, is_lossless_to_float(0.5));
     EXPECT_EQ(true, is_lossless_to_float(0.001953125));
