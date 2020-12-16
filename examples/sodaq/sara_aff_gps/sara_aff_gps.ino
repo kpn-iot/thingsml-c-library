@@ -6,7 +6,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include <Wire.h>
-
 /*
  * *****************
  * NOTICE
@@ -31,23 +30,28 @@
  */
 
 /*
- * Configuration
+ * Begin Configuration
  */
-#define DEVICE_URN      "urn:dev:IMEI:--fill-me--:"
+#define DEVICE_URN      "urn:dev:IMEI:--fill-imei--:"
 #define DEVICE_KEY      "--fill-me--"
 
-#define PINNUMBER       "" // Normally not needed
+/*
+ * APN information is provided with the sim card
+ * If you lost the information the following options can be tried:
+ *  - leave empty
+ *  - "kpnthings.iot" (for KPN Things M2M)
+ *  - "kpnthings2.m2m" (for KPN Things M2M+)
+*/
+#define APN             "--fill-me--"
+/*
+ * End Configuration
+ */
 
-#define APN        "kpnthings2.m2m"
-#define APN_LOGIN      "" // Normally not needed
-#define APN_PASSWORD   "" // Normally not needed
 
 #define HTTP_HOST       "m.m"
 #define HTTP_IP         "10.151.236.157"
 #define HTTP_PATH       "/ingestion/m2m/senml/v1"
 #define HTTP_PORT       80
-
-
 
 #define CONSOLE_STREAM   SerialUSB
 #define MODEM_STREAM     Serial1
@@ -85,55 +89,87 @@ struct GPSInfo {
   double longitude = 0;
 };
 
+
+int toInt(char * start, int len) {
+  int result = 0;
+  for(int i = 0; i < len; i += 1) {
+    result = result * 10 + (start[i] - '0');
+  }
+  return result;
+}
+
 struct GPSInfo readGPS() {
   memset(buff, 0, BUFFER_SIZE);
   uint16_t count = 0;
-  Wire.beginTransmission(GPS_ADR);
-  Wire.write((uint8_t)0xFD);
-  Wire.endTransmission(false);
-  Wire.requestFrom(GPS_ADR, 2);
-  count = (uint16_t)(Wire.read() << 8) | Wire.read();
-  count = (count > BUFFER_SIZE) ? BUFFER_SIZE : count;
-  GPSInfo info;
-  if (count) {
-    for (size_t i = 0; i < (count-1); i++) {
-      Wire.requestFrom(GPS_ADR, 1, false);
-      buff[i] = Wire.read();
-    }
-    Wire.requestFrom(GPS_ADR, 1);
-    buff[count-1] = Wire.read();
-    // http://navspark.mybigcommerce.com/content/NMEA_Format_v0.1.pdf
-    char * line = strstr(buff, "$GNRMC");
-  
-    if (line != NULL) {
-      char * next = strchr(line, ',');
-      int i = 0;
-      while(next != NULL) {
-         next = strchr(next + 1, ',');
-         if (i == 0) {
-            info.hasFix = next[1] == 'A';
-         } else if (i == 1 && info.hasFix) {
-            char * end = strchr(next + 1, ',');
-            info.latitude = strtod(next + 1, &end) / 100;
-         } else if (i == 2 && info.hasFix) {
-            info.latitude *= next[1] == 'N' ? 1 : -1;
-         } else if (i == 3 && info.hasFix) {
-            char * end = strchr(next + 1, ',');
-            info.longitude = strtod(next + 1, &end) / 100;
-         } else if (i == 4 && info.hasFix) {
-            info.longitude *= next[1] == 'E' ? 1 : -1;
-         } else if (i > 4) {
-            break;
-         }
-         i++;
-      }
-    }
-  } else {
-     Wire.endTransmission();
-  }
 
+  for(int i = 0; i < 20; i += 1) {
+    Wire.beginTransmission(GPS_ADR);
+    Wire.write((uint8_t)0xFD);
+    Wire.endTransmission(false);
+    Wire.requestFrom(GPS_ADR, 2);
+    count = (uint16_t)(Wire.read() << 8) | Wire.read();
+    count = (count > BUFFER_SIZE) ? BUFFER_SIZE : count;
+    if (count > 0) {
+      break;
+    }
+    Wire.endTransmission();
+    delay(50);
+  }
+  GPSInfo info;
+  if (count == 0) {
+    CONSOLE_STREAM.println("No gps module response");
+    return info;
+  }
+  for (size_t i = 0; i < (count-1); i++) {
+    Wire.requestFrom(GPS_ADR, 1, false);
+    buff[i] = Wire.read();
+  }
+  Wire.requestFrom(GPS_ADR, 1);
+  buff[count-1] = Wire.read();
+  // http://navspark.mybigcommerce.com/content/NMEA_Format_v0.1.pdf
+  char * line = strstr(buff, "$GNRMC");
+
+  if (line != NULL) {
+    char * next = strchr(line, ',');
+    int i = 0;
+    int degrees, minutes, seconds;
+    while(next != NULL) {
+       next = strchr(next + 1, ',');
+       if (i == 0) {
+          info.hasFix = next[1] == 'A';
+       } else if (i == 1 && info.hasFix) {
+          degrees = toInt(&next[1], 2);
+          minutes = toInt(&next[3], 2);
+          seconds = toInt(&next[6], 5);
+       } else if (i == 2 && info.hasFix) {
+          info.latitude = (next[1] == 'N' ? 1 : -1) * ((double)degrees) + ((double) minutes) / 60 + ((double) seconds) / 6000000;
+       } else if (i == 3 && info.hasFix) {
+          degrees = toInt(&next[1], 3);
+          minutes = toInt(&next[4], 2);
+          seconds = toInt(&next[7], 5);
+       } else if (i == 4 && info.hasFix) {
+          info.longitude = (next[1] == 'E' ? 1 : -1) * ((double)degrees) + ((double) minutes) / 60 + ((double) seconds) / 6000000;
+       } else if (i > 4) {
+          break;
+       }
+       i++;
+    }
+  }
+  CONSOLE_STREAM.println(buff);
   return info;
 }
+
+struct GPSInfo getGPS() {
+  for(int i = 0; i < 10; i += 1) {
+    GPSInfo info = readGPS();
+    if (info.hasFix || i == 9) {
+      return info;
+    }
+    delay(50);
+  }
+  
+}
+
 
 void setup() {
   device.add(temperature);
@@ -164,15 +200,13 @@ void setup() {
   r4x.init(&saraR4xxOnOff, MODEM_STREAM);
 
   CONSOLE_STREAM.println("Attempting initial gps fix");
-  for (int i = 0; i < 100; i += 1) {
-    GPSInfo info = readGPS(); 
-    if (info.hasFix) {
-      CONSOLE_STREAM.println("Initial gps fix succesfull");
-      break;
-    }
-    delay(100);
-  }
   
+  GPSInfo info = getGPS(); 
+  if (info.hasFix) {
+    CONSOLE_STREAM.println("Initial gps fix succesfull");
+  } else {
+    CONSOLE_STREAM.println("Initial gps fix failed");
+  }
 }
 
 void loop() {
@@ -198,19 +232,12 @@ int8_t getBoardTemperature() {
 
 void postHTTP() {
   temperature.set(AccMeter.getTemperature());
-  GPSInfo info = readGPS();
-  int i = 0;
-  while(!info.hasFix && i < 100) {
-    info = readGPS();
-    if (info.hasFix) {
-      break;
-    }
-    delay(100);
-    i++;
-  }
+  GPSInfo info = getGPS();
   if (info.hasFix) {
     latitude.set(info.latitude);
     longitude.set(info.longitude);
+  } else {
+   CONSOLE_STREAM.println("Cannot get gps fix");
   }
   int len = ThingsML::httpPost(buff, BUFFER_SIZE, DEVICE_KEY, HTTP_HOST, HTTP_PATH, device);
 

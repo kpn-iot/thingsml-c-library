@@ -27,26 +27,28 @@
  */
 
 /*
- * Configuration
+ * Begin Configuration
  */
-#define DEVICE_URN      "urn:dev:IMEI:--fill-me--:"
+#define DEVICE_URN      "urn:dev:IMEI:--fill-imei--:"
 #define DEVICE_KEY      "--fill-me--"
 
-#define PINNUMBER       "" // Normally not needed
+/*
+ * APN information is provided with the sim card
+ * If you lost the information the following options can be tried:
+ *  - leave empty
+ *  - "kpnthings.iot" (for KPN Things M2M)
+ *  - "kpnthings2.m2m" (for KPN Things M2M+)
+*/
+#define APN             "--fill-me--"
+/*
+ * End Configuration
+ */
 
-#define APN        "kpnthings2.m2m"
-#define APN_LOGIN      "" // Normally not needed
-#define APN_PASSWORD   "" // Normally not needed
 
 #define HTTP_HOST       "m.m"
 #define HTTP_IP         "10.151.236.157"
 #define HTTP_PATH       "/ingestion/m2m/senml/v1"
 #define HTTP_PORT       80
-
-
-
-
-
 
 #define CONSOLE_STREAM   SerialUSB
 #define MODEM_STREAM     Serial1

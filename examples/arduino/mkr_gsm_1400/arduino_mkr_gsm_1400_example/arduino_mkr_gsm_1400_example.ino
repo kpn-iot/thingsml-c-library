@@ -2,14 +2,25 @@
 #include <MKRGSM.h>
 
 /*
- * Configuration
+ * Begin Configuration
  */
 #define DEVICE_URN      "urn:dev:IMEI:--fill-imei--:"
 #define DEVICE_KEY      "--fill-me--"
 
-#define PINNUMBER       ""
+/*
+ * APN information is provided with the sim card
+ * If you lost the information the following options can be tried:
+ *  - leave empty
+ *  - "kpnthings.iot" (for KPN Things M2M)
+ *  - "kpnthings2.m2m" (for KPN Things M2M+)
+*/
+#define APN             "--fill-me--"
+/*
+ * End Configuration
+ */
 
-#define GPRS_APN        "kpnthings2.m2m"
+
+#define PINNUMBER       ""
 #define GPRS_LOGIN      ""
 #define GPRS_PASSWORD   ""
 
@@ -46,7 +57,7 @@ void setup() {
 #endif
   while (!connected) {
     if ((gsmAccess.begin(PINNUMBER) == GSM_READY) &&
-        (gprs.attachGPRS(GPRS_APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) {
+        (gprs.attachGPRS(APN, GPRS_LOGIN, GPRS_PASSWORD) == GPRS_READY)) {
       connected = true;
     } else {
 #if DEBUG      

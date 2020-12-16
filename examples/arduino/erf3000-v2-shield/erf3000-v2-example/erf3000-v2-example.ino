@@ -2,12 +2,23 @@
 #include <thingsml_http.h>
 
 /*
- * Configuration
+ * Begin Configuration
  */
 #define DEVICE_URN      "urn:dev:IMEI:--fill-imei--:"
 #define DEVICE_KEY      "--fill-me--"
 
-#define GPRS_APN        "kpnthings2.m2m"
+/*
+ * APN information is provided with the sim card
+ * If you lost the information the following options can be tried:
+ *  - leave empty
+ *  - "kpnthings.iot" (for KPN Things M2M)
+ *  - "kpnthings2.m2m" (for KPN Things M2M+)
+*/
+#define APN             "--fill-me--"
+/*
+ * End Configuration
+ */
+
 
 #define HTTP_HOST       "m.m"
 #define HTTP_IP         "10.151.236.157"
@@ -87,7 +98,7 @@ void setup() {
     BG96.write("AT+CIMI\r"); // Request International Mobile Subscriber Identity (IMSI)
     ShowSerialData();
     BG96.write(
-        "AT+CGDCONT=1,\"IP\",\"" + GPRS_APN + "\"\r"); // +CGDCONT:
+        "AT+CGDCONT=1,\"IP\",\"" + APN + "\"\r"); // +CGDCONT:
                                                         // <cid>,<PDP_type>,<APN>,<PDP_addr>,<data_comp>,<head_comp>[…]
     ShowSerialData();
     delay(200);
