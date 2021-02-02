@@ -33,7 +33,7 @@
 #define DEBUG true
 
 SenMLPack device(DEVICE_URN);
-SenMLDoubleRecord temperature(THINGSML_TEMPERATURE);
+SenMLDoubleRecord temperature(SENML_NAME_TEMPERATURE, SENML_UNIT_DEGREES_CELSIUS);
 
 GSMClient client;
 GPRS gprs;

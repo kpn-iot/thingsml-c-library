@@ -22,3 +22,15 @@ Read the docs [here](https://kpn-iot.github.io/thingsml-c-library/)
 - Examples
 - Documentation
 - Tests
+
+# Running
+
+## Bazel
+Bazel can be installed from here: https://docs.bazel.build/versions/master/install.html \
+Run the unit tests using:
+
+    bazel test test --test_output=all
+
+## Arduino
+Install using the built in library manager, search for "ThingsML".\
+The library includes various examples which can be openened from the examples dropdown.

@@ -150,7 +150,8 @@ enum SenMLUnit {
     SENML_UNIT_EVENT_RATE_PER_MINUTE,
     SENML_UNIT_BPM,
     SENML_UNIT_BEATS,
-    SENML_UNIT_SIEMENS_PER_METER
+    SENML_UNIT_SIEMENS_PER_METER,
+    SENML_UNIT_PARTS_PER_MILLION
 };
 
 #define SENML_NAME_TEMPERATURE "temperature"
@@ -193,5 +194,8 @@ enum SenMLUnit {
 #define SENML_NAME_READ_SWITCH "readSwitch"
 #define SENML_NAME_PRESENCE "presence"
 #define SENML_NAME_COUNTER "counter"
+#define SENML_NAME_URL "url"
+#define SENML_NAME_TOKEN "token"
+#define SENML_NAME_FIRMWARE "firmware"
 
 #endif // !THINGSML_SENML_ENUMS

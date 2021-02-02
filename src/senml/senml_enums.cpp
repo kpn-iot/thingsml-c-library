@@ -311,6 +311,11 @@ const char str58[]
 PROGMEM
 #endif
 = "S/m";
+const char str59[] 
+#ifdef ARDUINO
+PROGMEM
+#endif
+= "ppm";
 
 
 const char * const senml_units_names[]
@@ -375,5 +380,6 @@ PROGMEM
     str55,
     str56,
     str57,
-    str58
+    str58,
+    str59
 };

@@ -29,7 +29,7 @@
 #define DEBUG true
 
 SenMLPack device(DEVICE_URN);
-SenMLDoubleRecord temperature(THINGSML_TEMPERATURE);
+SenMLDoubleRecord temperature(SENML_NAME_TEMPERATURE, SENML_UNIT_DEGREES_CELSIUS);
 char buff[400] = {0};
 
 SoftwareSerial BG96(7, 8);

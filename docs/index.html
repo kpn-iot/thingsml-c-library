@@ -241,7 +241,15 @@
                     <a href="#usage-for-m2m" class="toc-h2 toc-link" data-title="usage-for-m2m">Usage for m2m</a>
                   </li>
                   <li>
-                    <a href="#further-usage" class="toc-h2 toc-link" data-title="further-usage">Further usage</a>
+                    <a href="#examples" class="toc-h2 toc-link" data-title="examples">Examples</a>
+                  </li>
+              </ul>
+          </li>
+          <li>
+            <a href="#firmware-over-the-air-m2m-only" class="toc-h1 toc-link" data-title="firmware-over-the-air-m2m-only">Firmware over the air (m2m only)</a>
+              <ul class="toc-list-h2">
+                  <li>
+                    <a href="#example" class="toc-h2 toc-link" data-title="example">Example</a>
                   </li>
               </ul>
           </li>
@@ -399,7 +407,8 @@ For an indepth look into what senml is and what it can mean for you, check out <
 <p>The resulting code snippet reads the value, stores this measurement in a senml record as temperature in degrees Celsius. The document object renders a json string to the Serial output.</p>
 <h2 id='usage-for-m2m'>Usage for m2m</h2>
 <p>Usage for m2m devices (2G/Lte-m based) is very similair to LoRaWAN with the exception that the data is transmitted using TCP to an HTTP server.
-To ease development ThingsML includes a HTTP Post builder, which includes functionality to calculate the needed authentication token. </p>
+To ease development ThingsML includes a HTTP Post builder, which includes functionality to calculate the needed authentication token. 
+For naming and units the SENML_NAME/SENML_UNIT enums are used instead of the THINGSML enum, see further in these docs under &quot;Names and Units&quot; for the complete list.</p>
 <pre class="highlight c tab-c--arduino"><code><span class="cp">#include &lt;thingsml_http.h&gt;
 </span></code></pre><pre class="highlight c tab-c--mbed"><code><span class="cp">#include &lt;thingsml_http.h&gt;
 </span></code></pre>
@@ -407,7 +416,7 @@ To ease development ThingsML includes a HTTP Post builder, which includes functi
 <li>To obtain this functionality a different header has to be included.</li>
 </ul>
 <pre class="highlight c tab-c--arduino"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"urn:dev:IMEI:1234:"</span><span class="p">);</span> <span class="c1">// Device name is now required and cannot be omitted like in LoRa.
-</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">SENML_NAME_TEMPERATURE</span><span class="p">,</span> <span class="n">SENML_UNIT_DEGREES_CELSIUS</span><span class="p">);</span>
 <span class="kt">char</span> <span class="n">output</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// 500 characters is big enough for most messages.
 </span>
 <span class="kt">void</span> <span class="nf">setup</span><span class="p">()</span> <span class="p">{</span>
@@ -423,7 +432,7 @@ To ease development ThingsML includes a HTTP Post builder, which includes functi
     <span class="n">Serial</span><span class="p">.</span><span class="n">println</span><span class="p">(</span><span class="n">output</span><span class="p">);</span>
 <span class="p">}</span>
 </code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLPack</span> <span class="n">device</span><span class="p">(</span><span class="s">"urn:dev:IMEI:1234:"</span><span class="p">);</span> <span class="c1">// Device name is now required and cannot be omitted like in LoRa.
-</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
+</span><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">SENML_NAME_TEMPERATURE</span><span class="p">,</span> <span class="n">SENML_UNIT_DEGREES_CELSIUS</span><span class="p">);</span>
 <span class="n">Serial</span> <span class="n">pc</span><span class="p">(</span><span class="n">USBTX</span><span class="p">,</span> <span class="n">USBRX</span><span class="p">);</span>
 <span class="kt">char</span> <span class="n">output</span><span class="p">[</span><span class="mi">500</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">0</span><span class="p">};</span> <span class="c1">// 500 characters is big enough for most messages.
 </span>
@@ -446,9 +455,50 @@ To ease development ThingsML includes a HTTP Post builder, which includes functi
 <ul>
 <li>Also serilization is slightly different and is only possible using a buffer. This restrictions exists because of the required token. </li>
 </ul>
-<h2 id='further-usage'>Further usage</h2>
-<p>Further usage can be found by using the examples packaged with this library.
+<h2 id='examples'>Examples</h2>
+<p>Further code examples can be found by using the examples packaged with this library.
 These can be found in the Arduino IDE under File&gt;Examples&gt;ThingsML.</p>
+<h1 id='firmware-over-the-air-m2m-only'>Firmware over the air (m2m only)</h1>
+<p>Using the Fota infrastructure on the KPN network it is possible to do firmware over the air (fota), this is currently available for premium customers upon request.
+The fota process works as follows:</p>
+
+<ul>
+<li>Upon sending a message the response could contain a fota SenML payload containing a &quot;token&quot; and &quot;url&quot;. </li>
+<li>If a token and url is received the fota download can begin. </li>
+<li>The download works by requesting parts from the &quot;url&quot;.
+
+<ul>
+<li>Each part is requested by setting the Range http header to the correct range in bytes.</li>
+<li>The &quot;token&quot; needs to be used as Bearer authorization.</li>
+<li>The total amount of parts can be deduced from the Content-Range http header in the response.</li>
+<li>The part can be validated using the returned Digest http header.</li>
+</ul></li>
+<li>After all parts are downloaded and stored. The hardware specific firmware upgrade can be executed.</li>
+</ul>
+
+<p>To allow easy implementation the SDK offers the following functions/classes:</p>
+
+<ul>
+<li>ThingsML::HttpFirmwareDownload class storing firmware message information</li>
+<li>ThingsML::HttpFirmwareDownload::parseFirmwareMessage parses incoming messages if it contains valid fota information.</li>
+<li>ThingsML::HttpFirmwareDownload::getHost the host (ip) of the file server extracted from the recent message.</li>
+<li>ThingsML::HttpFirmwareDownload::getPort the port of the file server extracted from the recent message.</li>
+<li>ThingsML::HttpFirmwareDownload::getFirmwarePartRequest generates a part http request.</li>
+<li>ThingsML::HttpFirmwareDownload::getTotalSizeFromResponse extracts the total size from a part response.</li>
+<li>ThingsML::HttpFirmwareDownload::getNumParts the total number of parts in this firmware using the total size in bytes.</li>
+<li>ThingsML::HttpFirmwareDownload::getCRC32FromResponse extracts the crc32 from a part response.</li>
+<li>ThingsML::HttpFirmwareDownload::calculateCRC32FromBody calculates a crc32 to verify.</li>
+<li>ThingsML::getHttpBodyStart Find the start position of the http body (where the firmware bytes start)</li>
+</ul>
+<h2 id='example'>Example</h2>
+<p>How the firmware functions can be used to perform a fota is illustrated using the Arduino example &quot;arduino_mkr_gsm_1400_fota.ino&quot;.</p>
+
+<p>It works in the following 5 steps:
+ 1. Upon receiving a message http response, parse if it contains a firmware message.
+ 2. Download the first firmware part, validating the correct working of the url &amp; token and also obtaining the total firmware size.
+ 3. Prepare the firmware file on the SD card.
+ 4. Download the other parts of the firmware file into the SD card file.
+ 5. Reboot the device to allow the bootloader to pickup the new firmware file.</p>
 <h1 id='details'>Details</h1>
 <p>The more in depth details of the library are explained below.</p>
 <h2 id='object-oriented-class-structure'>Object oriented: class structure</h2>
@@ -461,216 +511,296 @@ A SenMLPack can contain all object types as children: anything that descends fro
 <h2 id='names-and-units'>Names and Units</h2>
 <p>The library defines an enum for all of senml&#39;s supported measurement units (as in &#39;kilogram&#39;, &#39;meter&#39;,...). This makes it easier to keep compliance with the <a href="https://tools.ietf.org/html/draft-ietf-core-senml-13">senml specifications</a> so you don&#39;t have to worry about the exact unit symbols: the library takes care of this.<br>
 Similarly, the library also provides an enum with all the ThingsML names that the ThingsML standard supports.<br>
-Although it is possible that you assign your own name to a record, it is recommended to use ThingsML naming convention as this allows data to be addressed in a more semantic manner.<br>
+Although it is possible that you assign your own name to a record, it is recommended to use the ThingsML naming convention (for LoRa) and SenML naming convention (for m2m) as this allows data to be addressed in a more semantic manner.<br>
 According to the SenML specifications, all names are optional, so you don&#39;t have to declare a base name on the SenMLPack object nor a name for SenMLRecords. This makes it harder though to identify your data. 
 In general, it is advisable to specify the name of the device as the base name and the name of the sensor as the record name. Alternatively, you can skip the base name and put both device and sensor name in the record, in this format: <code>device:sensor</code>.
-The following ThingsML enums with their respective names and units are supported:</p>
+The following ThingsML/SenML enums with their respective names and units are supported:</p>
 
 <table><thead>
 <tr>
-<th>Enum Key</th>
+<th>ThingsML Enum Key</th>
+<th>SenML Enum Key</th>
+<th>SenML Unit Key</th>
 <th>Name</th>
 <th>Unit</th>
 </tr>
 </thead><tbody>
 <tr>
 <td>THINGSML_TEMPERATURE</td>
+<td>SENML_NAME_TEMPERATURE</td>
+<td>SENML_UNIT_DEGREES_CELSIUS</td>
 <td>temperature</td>
 <td>Cel</td>
 </tr>
 <tr>
 <td>THINGSML_HUMIDITY</td>
+<td>SENML_NAME_HUMIDITY</td>
+<td>SENML_UNIT_RELATIVE_HUMIDITY</td>
 <td>humidity</td>
 <td>%RH</td>
 </tr>
 <tr>
 <td>THINGSML_LATITUDE</td>
+<td>SENML_NAME_LATITUDE</td>
+<td>SENML_UNIT_DEGREES_LATITUDE</td>
 <td>latitude</td>
 <td>lat</td>
 </tr>
 <tr>
 <td>THINGSML_LONGITUDE</td>
+<td>SENML_NAME_LONGITUDE</td>
+<td>SENML_UNIT_DEGREES_LONGITUDE</td>
 <td>longitude</td>
 <td>lon</td>
 </tr>
 <tr>
 <td>THINGSML_ALTITUDE</td>
+<td>SENML_NAME_ALTITUDE</td>
+<td>SENML_UNIT_METER</td>
 <td>altitude</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_POWER</td>
+<td>SENML_NAME_POWER</td>
+<td>SENML_UNIT_WATT</td>
 <td>power</td>
 <td>W</td>
 </tr>
 <tr>
 <td>THINGSML_PRESSURE</td>
+<td>SENML_NAME_PRESSURE</td>
+<td>SENML_UNIT_PASCAL</td>
 <td>pressure</td>
 <td>Pa</td>
 </tr>
 <tr>
 <td>THINGSML_ANGLE</td>
+<td>SENML_NAME_ANGLE</td>
+<td>SENML_UNIT_RADIAN</td>
 <td>angle</td>
 <td>rad</td>
 </tr>
 <tr>
 <td>THINGSML_LENGTH</td>
+<td>SENML_NAME_LENGTH</td>
+<td>SENML_UNIT_METER</td>
 <td>length</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_BREADTH</td>
+<td>SENML_NAME_BREADTH</td>
+<td>SENML_UNIT_METER</td>
 <td>breadth</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_HEIGHT</td>
+<td>SENML_NAME_HEIGHT</td>
+<td>SENML_UNIT_METER</td>
 <td>height</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_WEIGHT</td>
+<td>SENML_NAME_WEIGHT</td>
+<td>SENML_UNIT_KILOGRAM</td>
 <td>weight</td>
 <td>kg</td>
 </tr>
 <tr>
 <td>THINGSML_THICKNESS</td>
+<td>SENML_NAME_THICKNESS</td>
+<td>SENML_UNIT_METER</td>
 <td>thickness</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_DISTANCE</td>
+<td>SENML_NAME_DISTANCE</td>
+<td>SENML_UNIT_METER</td>
 <td>distance</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_AREA</td>
+<td>SENML_NAME_AREA</td>
+<td>SENML_UNIT_SQUARE_METER</td>
 <td>area</td>
 <td>m2</td>
 </tr>
 <tr>
 <td>THINGSML_VOLUME</td>
+<td>SENML_NAME_VOLUME</td>
+<td>SENML_UNIT_CUBIC_METER</td>
 <td>volume</td>
 <td>m3</td>
 </tr>
 <tr>
 <td>THINGSML_VELOCITY</td>
+<td>SENML_NAME_VELOCITY</td>
+<td>SENML_UNIT_VELOCITY</td>
 <td>velocity</td>
 <td>m/s</td>
 </tr>
 <tr>
 <td>THINGSML_ELECTRIC_CURRENT</td>
+<td>SENML_NAME_ELECTRIC_CURRENT</td>
+<td>SENML_UNIT_AMPERE</td>
 <td>electricCurrent</td>
 <td>A</td>
 </tr>
 <tr>
 <td>THINGSML_ELECTRIC_POTENTIAL</td>
+<td>SENML_NAME_ELECTRIC_POTENTIAL</td>
+<td>SENML_UNIT_VOLT</td>
 <td>electricPotential</td>
 <td>V</td>
 </tr>
 <tr>
 <td>THINGSML_ELECTRIC_RESISTANCE</td>
+<td>SENML_NAME_ELECTRIC_RESISTANCE</td>
+<td>SENML_UNIT_OHM</td>
 <td>electricResistance</td>
 <td>Ohm</td>
 </tr>
 <tr>
 <td>THINGSML_ILLUMINANCE</td>
+<td>SENML_NAME_ILLUMINANCE</td>
+<td>SENML_UNIT_LUX</td>
 <td>illuminance</td>
 <td>lx</td>
 </tr>
 <tr>
 <td>THINGSML_ACCELERATION_X</td>
+<td>SENML_NAME_ACCELERATION_X</td>
+<td>SENML_UNIT_ACCELERATION</td>
 <td>accelerationX</td>
 <td>m/s2</td>
 </tr>
 <tr>
 <td>THINGSML_ACCELERATION_Y</td>
+<td>SENML_NAME_ACCELERATION_Y</td>
+<td>SENML_UNIT_ACCELERATION</td>
 <td>accelerationY</td>
 <td>m/s2</td>
 </tr>
 <tr>
 <td>THINGSML_ACCELERATION_Z</td>
+<td>SENML_NAME_ACCELERATION_Z</td>
+<td>SENML_UNIT_ACCELERATION</td>
 <td>accelerationZ</td>
 <td>m/s2</td>
 </tr>
 <tr>
 <td>THINGSML_HEADING</td>
+<td>SENML_NAME_HEADING</td>
+<td>SENML_UNIT_RADIAN</td>
 <td>heading</td>
 <td>rad</td>
 </tr>
 <tr>
 <td>THINGSML_CO_CONCENTRATION</td>
+<td>SENML_NAME_CO_CONCENTRATION</td>
+<td>SENML_UNIT_PARTS_PER_MILLION</td>
 <td>COConcentration</td>
 <td>ppm</td>
 </tr>
 <tr>
 <td>THINGSML_CO2_CONCENTRATION</td>
+<td>SENML_NAME_CO2_CONCENTRATION</td>
+<td>SENML_UNIT_PARTS_PER_MILLION</td>
 <td>CO2Concentration</td>
 <td>ppm</td>
 </tr>
 <tr>
 <td>THINGSML_SOUND</td>
+<td>SENML_NAME_SOUND</td>
+<td>SENML_UNIT_DECIBEL</td>
 <td>sound</td>
 <td>db</td>
 </tr>
 <tr>
 <td>THINGSML_FREQUENCY</td>
+<td>SENML_NAME_FREQUENCY</td>
+<td>SENML_UNIT_HERTZ</td>
 <td>frequency</td>
 <td>Hz</td>
 </tr>
 <tr>
 <td>THINGSML_BATTERY_LEVEL</td>
+<td>SENML_NAME_BATTERY_LEVEL</td>
+<td>SENML_UNIT_PERCENTAGE_REMAINING_BATTERY_LEVEL</td>
 <td>batteryLevel</td>
 <td>%EL</td>
 </tr>
 <tr>
 <td>THINGSML_BATTERY_VOLTAGE</td>
+<td>SENML_NAME_BATTERY_VOLTAGE</td>
+<td>SENML_UNIT_VOLT</td>
 <td>batteryVoltage</td>
 <td>V</td>
 </tr>
 <tr>
 <td>THINGSML_RADIUS</td>
+<td>SENML_NAME_RADIUS</td>
+<td>SENML_UNIT_METER</td>
 <td>radius</td>
 <td>m</td>
 </tr>
 <tr>
 <td>THINGSML_BATTERY_LEVEL_LOW</td>
+<td>SENML_NAME_BATTERY_LEVEL_LOW</td>
+<td>SENML_UNIT_RATIO</td>
 <td>batteryLevelLow</td>
 <td>/</td>
 </tr>
 <tr>
 <td>THINGSML_COMPASS_X</td>
+<td>SENML_NAME_COMPASS_X</td>
+<td>SENML_UNIT_TESLA</td>
 <td>compassX</td>
 <td>T</td>
 </tr>
 <tr>
 <td>THINGSML_COMPASS_Y</td>
+<td>SENML_NAME_COMPASS_Y</td>
+<td>SENML_UNIT_TESLA</td>
 <td>compassY</td>
 <td>T</td>
 </tr>
 <tr>
 <td>THINGSML_COMPASS_Z</td>
+<td>SENML_NAME_COMPASS_Z</td>
+<td>SENML_UNIT_TESLA</td>
 <td>compassZ</td>
 <td>T</td>
 </tr>
 <tr>
 <td>THINGSML_READ_SWITCH</td>
+<td>SENML_NAME_READ_SWITCH</td>
+<td>SENML_UNIT_RATIO</td>
 <td>readSwitch</td>
 <td>/</td>
 </tr>
 <tr>
 <td>THINGSML_PRESENCE</td>
+<td>SENML_NAME_PRESENCE</td>
+<td>SENML_UNIT_NONE</td>
 <td>presence</td>
 <td></td>
 </tr>
 <tr>
 <td>THINGSML_COUNTER</td>
+<td>SENML_NAME_COUNTER</td>
+<td>SENML_UNIT_NONE</td>
 <td>counter</td>
 <td></td>
 </tr>
 </tbody></table>
 
-<aside class="info">For LoRa devices using KPN Things the device name can be omitted to reduce the payload size, however for M2M devices the name is required identification information and cannot be ommitted when using KPN Things.</aside>
+<aside class="info">For LoRa devices using KPN Things the device name (bn) can be omitted to reduce the payload size, however for M2M devices the name is required identification information and cannot be ommitted when using KPN Things.</aside>
 <h2 id='associating-records-with-a-document'>Associating records with a document</h2><pre class="highlight c tab-c--arduino"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>
 <span class="n">device</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="n">temperature</span><span class="p">);</span>                      
 </code></pre><pre class="highlight c tab-c--mbed"><code><span class="n">SenMLDoubleRecord</span> <span class="n">temperature</span><span class="p">(</span><span class="n">THINGSML_TEMPERATURE</span><span class="p">);</span>

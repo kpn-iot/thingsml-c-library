@@ -17,17 +17,20 @@
 #include <string.h>
 
 void SenMLBaseParser::setCurrentPack(String &name) {
-    this->curPack = NULL;     // reset before we start so we indicate that nothing was ound
+    this->curPack = NULL;     // reset before we start so we indicate that nothing was found
     this->curPackName = name; // need a ref to the name in case we can't find the pack object
 
-    if (name == this->root->getBaseName()) { // check the root first, most common probably
+    if (this->root->getBaseName() != nullptr && name == this->root->getBaseName()) { // check the root first, most common probably
         this->curPack = this->root;
         return;
     }
 
     SenMLBase *found = this->root->getFirst();
     while (found) {
-        if (found->isPack() && name == ((SenMLPack *)found)->getBaseName()) {
+        if (found->isPack() 
+            && ((SenMLPack *)found)->getBaseName() != nullptr 
+            && name == ((SenMLPack *)found)->getBaseName()
+        ) {
             this->curPack = (SenMLPack *)found;
             return;
         }
@@ -41,7 +44,10 @@ void SenMLBaseParser::setCurrentRecord(String &name) {
     if (this->curPack) {
         SenMLBase *rec = this->curPack->getFirst();
         while (rec) {
-            if (rec->isPack() == false && name == ((SenMLRecord *)rec)->getName()) {
+            if (rec->isPack() == false 
+                && ((SenMLRecord *)rec)->getName() != nullptr
+                && name == ((SenMLRecord *)rec)->getName()
+            ) {
                 this->curRec = (SenMLRecord *)rec;
                 return;
             }
