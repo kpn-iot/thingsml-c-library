@@ -14,7 +14,7 @@
 #include "senml_string_actuator.h"
 #include "../senml_helpers.h"
 #include "../senml_logging.h"
-#include <cstring>
+#include <string.h>
 
 void SenMLStringActuator::actuate(const void *value, int dataLength, SenMLDataType dataType) {
     if (dataType == SENML_TYPE_STRING || dataType == CBOR_TYPE_STRING) {

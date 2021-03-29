@@ -14,7 +14,7 @@
 #include "senml_binary_actuator.h"
 #include "../senml_helpers.h"
 #include "../senml_logging.h"
-#include <cstring>
+#include <string.h>
 
 void SenMLBinaryActuator::actuate(const void *value, int dataLength, SenMLDataType dataType) {
     if (dataType == SENML_TYPE_DATA) {

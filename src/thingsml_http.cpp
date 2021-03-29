@@ -82,7 +82,7 @@ namespace ThingsML {
         return 0;
     }
 
-    int strstr(const char data[], int dataLength, const char needle[], int needleLength) {
+    int strstr_n(const char data[], int dataLength, const char needle[], int needleLength) {
         if (needleLength > dataLength) {
             return -1;
         }

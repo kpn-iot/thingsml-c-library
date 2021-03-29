@@ -16,8 +16,8 @@
 #define THINGSML_HTTP
 
 #include "thingsml.h"
-#include <cstring>
-#include <cstdio>
+#include <string.h>
+#include <stdio.h>
 #include "util/sha256.h"
 
 namespace ThingsML {
@@ -53,7 +53,7 @@ namespace ThingsML {
      * 
      * @return the index of the start of the needle or -1 if the needle could not be found
      */
-    int strstr(const char data[], int dataLength, const char needle[], int needleLength);
+    int strstr_n(const char data[], int dataLength, const char needle[], int needleLength);
     
     // size_t httpPostCbor(char buffer[], int bufferSize, char key[], char host[], char path[], SenMLBasePack &body) {
     //     int keySize = strlen(key);

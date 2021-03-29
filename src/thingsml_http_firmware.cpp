@@ -13,7 +13,7 @@
  * 
  */
 #include "thingsml_http_firmware.h"
-#include <cstring>
+#include <string.h>
 
 #define MAX_STR_LENGTH 1024
 
@@ -126,25 +126,25 @@ namespace ThingsML {
         if (_url.get() == nullptr) {
             return nullptr;
         }
-        const char * hostnameStart = std::strstr(_url.get(), "://");
+        const char * hostnameStart = strstr(_url.get(), "://");
         if (hostnameStart == nullptr) {
             return nullptr;
         }
-        return std::strstr(hostnameStart + 3, "/");
+        return strstr(hostnameStart + 3, "/");
     }
 
     String HttpFirmwareDownload::getHost() {
         if (_url.get() == nullptr) {
             return String();
         }
-        const char * hostnameStart = std::strstr(_url.get(), "://");
+        const char * hostnameStart = strstr(_url.get(), "://");
         if (hostnameStart == nullptr) {
             return String();
         }
         hostnameStart = &hostnameStart[3]; // skip ://
-        const char * portStart = std::strstr(hostnameStart, ":");
-        const char * hostnameEnd = std::strstr(hostnameStart, "/");
-        const char * queryStart = std::strstr(hostnameStart, "?");
+        const char * portStart = strstr(hostnameStart, ":");
+        const char * hostnameEnd = strstr(hostnameStart, "/");
+        const char * queryStart = strstr(hostnameStart, "?");
         if (portStart != nullptr) {
             return makeString(hostnameStart, portStart - hostnameStart);
         }
@@ -161,12 +161,12 @@ namespace ThingsML {
         if (_url.get() == nullptr) {
             return 0;
         }
-        const char * hostnameStart = std::strstr(_url.get(), "://");
+        const char * hostnameStart = strstr(_url.get(), "://");
         if (hostnameStart == nullptr) {
             return 0;
         }
         hostnameStart = &hostnameStart[3]; // skip ://
-        const char * portStart = std::strstr(hostnameStart, ":");
+        const char * portStart = strstr(hostnameStart, ":");
         if (portStart != nullptr) {
             int port = 0;
             for (int i = 1; i < 6; i ++) { // max 5 digits: 65535
@@ -181,7 +181,7 @@ namespace ThingsML {
             }
             return port;
         }
-        return std::strstr(_url.get(), "https://") != nullptr ? 443 : 80;
+        return strstr(_url.get(), "https://") != nullptr ? 443 : 80;
     }
 
     bool HttpFirmwareDownload::isFirmwareMessage(char message[], int messageLength) {
@@ -192,10 +192,10 @@ namespace ThingsML {
         if (message[start] != '[') { // Must start with json array
             return false;
         }
-        if (strstr(&message[start], messageLength - start, "token", 5) == -1) {
+        if (strstr_n(&message[start], messageLength - start, "token", 5) == -1) {
             return false;
         }
-        if (strstr(&message[start], messageLength - start, "url", 3) == -1) {
+        if (strstr_n(&message[start], messageLength - start, "url", 3) == -1) {
             return false;
         }
         return true;

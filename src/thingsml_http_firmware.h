@@ -16,8 +16,8 @@
 #define THINGSML_HTTP_FIRMWARE
 
 #include "thingsml_http.h"
-#include <cstring>
-#include <cstdio>
+#include <string.h>
+#include <stdio.h>
 
 namespace ThingsML {
     class HttpFirmwareDownload {
