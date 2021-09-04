@@ -16,10 +16,10 @@
 
 
 #ifdef ARDUINO
-#if (defined(__AVR__))
-#include <avr\pgmspace.h>
-#else
+#if defined ESP32 || defined ESP8266
 #include <pgmspace.h>
+#else
+#include <avr\pgmspace.h>
 #endif
 char pgmBuff[9] = {0};
 #endif
