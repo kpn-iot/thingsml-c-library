@@ -19,7 +19,11 @@
 #include <math.h>
 #include <string.h>
 #ifdef ARDUINO
-#include <avr/pgmspace.h>
+#if (defined(__AVR__))
+#include <avr\pgmspace.h>
+#else
+#include <pgmspace.h>
+#endif
 #endif
 
 bool SenMLRecord::setTime(double value, bool absolute) {

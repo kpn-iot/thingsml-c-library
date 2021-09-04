@@ -16,7 +16,11 @@
 
 
 #ifdef ARDUINO
-#include <avr/pgmspace.h>
+#if (defined(__AVR__))
+#include <avr\pgmspace.h>
+#else
+#include <pgmspace.h>
+#endif
 char pgmBuff[9] = {0};
 #endif
 
