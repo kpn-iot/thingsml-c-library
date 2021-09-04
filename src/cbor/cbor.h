@@ -16,7 +16,7 @@
 #define SENMLCBOR
 
 #ifdef ARDUINO
-    #include <stream.h>
+    #include <Stream.h>
 #endif
 #include <stddef.h>
 #include <stdint.h>

@@ -23,7 +23,7 @@ using namespace std;
 #define String string
 #elif defined(ARDUINO)
 #include "Arduino.h"
-#include <stream.h>
+#include <Stream.h>
 #else
 #include <string>
 using namespace std;
