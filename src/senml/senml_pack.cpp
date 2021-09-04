@@ -22,7 +22,11 @@
 #include "senml_pack.h"
 #include <string.h>
 #ifdef ARDUINO
-#include <avr/pgmspace.h>
+#if defined ESP32 || defined ESP8266
+#include <pgmspace.h>
+#else
+#include <avr\pgmspace.h>
+#endif
 #endif
 
 void SenMLPack::setBaseName(const char *name) {
