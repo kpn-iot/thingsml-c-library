@@ -14,7 +14,7 @@
 #ifndef THINGSML_SENML_JSON_PARSER
 #define THINGSML_SENML_JSON_PARSER
 
-#include "senml_JsonListener.h"
+#include "senml_jsonlistener.h"
 #include "senml_base_parser.h"
 
 /**
