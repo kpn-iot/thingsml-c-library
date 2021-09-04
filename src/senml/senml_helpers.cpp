@@ -15,7 +15,7 @@
 #include <string.h>
 
 #ifdef ESP32
-#include <arduino.h> //needed for sprintf
+#include <Arduino.h> //needed for sprintf
 #endif
 
 #ifdef ARDUINO
