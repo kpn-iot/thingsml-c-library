@@ -50,6 +50,11 @@ class Stream {
 };
 #endif
 
+// ToDo: check if this should be in ifdef 
+#ifdef ESP32
+#include <base64.h>
+#endif 
+
 #include "../util/base64.h"
 
 #endif
