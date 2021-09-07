@@ -23,11 +23,11 @@ namespace ThingsML {
     class HttpFirmwareDownload {
         public:
         
-        HttpFirmwareDownload(char baseName[]): _firmwareMessage(baseName), _url(SENML_NAME_URL), _token(SENML_NAME_TOKEN), _partSize(256) {
+        HttpFirmwareDownload(const char baseName[]): _firmwareMessage(baseName), _url(SENML_NAME_URL), _token(SENML_NAME_TOKEN), _partSize(256) {
             _firmwareMessage.add(_url);
             _firmwareMessage.add(_token);
         };
-        HttpFirmwareDownload(char baseName[], int partSize): _firmwareMessage(baseName), _url(SENML_NAME_URL), _token(SENML_NAME_TOKEN), _partSize(partSize) {
+        HttpFirmwareDownload(const char baseName[], int partSize): _firmwareMessage(baseName), _url(SENML_NAME_URL), _token(SENML_NAME_TOKEN), _partSize(partSize) {
             _firmwareMessage.add(_url);
             _firmwareMessage.add(_token);
         };
@@ -57,19 +57,19 @@ namespace ThingsML {
          * 
          * @returns size of the request in bytes
          */
-        size_t getFirmwarePartRequest(int partIndex, char buffer[], int bufferLength, char host[]);
+        size_t getFirmwarePartRequest(int partIndex, char buffer[], int bufferLength, const char host[]);
 
         /**
          * Parse the firmware message
          * 
          * @returns true if the message was successfully parsed.
          */
-        bool parseFirmwareMessage(char message[], int messageLength);
+        bool parseFirmwareMessage(const char message[], int messageLength);
 
         /**
          *  @returns true if the message contained in the data contains a firmware payload.
          */
-        static bool isFirmwareMessage(char message[], int messageLength);
+        static bool isFirmwareMessage(const char message[], int messageLength);
 
         /**
          *  This function extracts the total byte size of the resource
@@ -77,12 +77,12 @@ namespace ThingsML {
          * 
          *  @returns the total amount of bytes the file contains
          */
-        static int getTotalSizeFromResponse(char message[], int messageLength);
+        static int getTotalSizeFromResponse(const char message[], int messageLength);
 
 
-        static uint32_t getCRC32FromResponse(char message[], int messageLength);
+        static uint32_t getCRC32FromResponse(const char message[], int messageLength);
 
-        static uint32_t calculateCRC32FromBody(char body[], int bodyLength);
+        static uint32_t calculateCRC32FromBody(const char body[], int bodyLength);
 
         /**
          * The return value equal to nullptr indicates that a hostname could not be detected.
@@ -99,10 +99,10 @@ namespace ThingsML {
         int getPort();
 
         private: 
-            int _partSize = 256;
             SenMLPack _firmwareMessage;
             SenMLStringActuator _url;
             SenMLStringActuator _token;
+            int _partSize = 256;
             const char * getUrlPath();
     };
 }

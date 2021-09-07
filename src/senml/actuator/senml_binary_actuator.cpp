@@ -20,11 +20,9 @@ void SenMLBinaryActuator::actuate(const void *value, int dataLength, SenMLDataTy
     if (dataType == SENML_TYPE_DATA) {
         int decodedLen = base64_dec_len((char *)value, dataLength);
         char *decoded = (char *)malloc(decodedLen);
-#ifdef ESP32
-        base64_decode_chars((const char *)value, dataLength, decoded);
-#else
+
         base64_decode(decoded, (char *)value, dataLength);
-#endif
+        
         set((unsigned char *)decoded, decodedLen);
         lastAllocated = (unsigned char *) decoded;
         if (callback) {

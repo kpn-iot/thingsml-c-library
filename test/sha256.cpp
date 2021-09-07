@@ -15,7 +15,6 @@
 #include "gtest/gtest.h"
 
 TEST(sha256, small) {
-    Sha256 hash;
     char hoi[] = "abc";
     char output[65] = {0};
 
@@ -25,7 +24,6 @@ TEST(sha256, small) {
 }
 
 TEST(sha256, block) {
-    Sha256 hash;
     char hoi[] = "ba7816bf8f01cfea414140de5dae2aaa";
     char output[65] = {0};
     Sha256::hash(hoi, 32, output, 64);
@@ -34,7 +32,6 @@ TEST(sha256, block) {
 }
 
 TEST(sha256, two_blocks) {
-    Sha256 hash;
     char hoi[] = "4794396dae1ad3389086288471f4d6e099cfa83bb73ec735789fd94922484dcb";
     char output[65] = {0};
     Sha256::hash(hoi, 64, output, 64);
@@ -43,7 +40,6 @@ TEST(sha256, two_blocks) {
 }
 
 TEST(sha256, longdata) {
-    Sha256 hash;
     char hoi[] = "4794396dae1ad39086288471f4d6e099cfa83bb73ec735789fd94922484dcb4794396dae1ad3389086288471f4d6e0973ec735789fd94922484dcb4794396dae1ad3389086288471f4d6";
     char output[65] = {0};
     Sha256::hash(hoi, 148, output, 64);

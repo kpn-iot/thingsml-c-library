@@ -15,6 +15,8 @@
 #ifndef THINGSML_SENML_ENUMS
 #define THINGSML_SENML_ENUMS
 
+#include "defaults.h"
+
 /**
  * Lists all the data types that a value can have in senml.
  * This is primarely used for actuator callbacks on SenMLPack objects when no appropirate SenMLRecord could be found for
@@ -35,7 +37,7 @@ enum SenMLDataType { // json data types:
     CBOR_TYPE_DATA
 };
 
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
 extern char pgmBuff[];
 #endif
 extern const char *const senml_units_names[];

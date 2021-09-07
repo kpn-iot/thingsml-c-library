@@ -20,23 +20,23 @@
 #define VALID_FIRMWARE_MESSAGE2 "HTTP/1.1 200 OK\r\nDate: Mon, 11 Jan 2021 15:15:22 GMT\r\nServer: Apache/2\r\nContent-Length: 303\r\nVary: Accept-Encoding,User-Agent\r\nContent-Type: text/plain\r\n\r\n[{\"bn\":\"urn:dev:IMEI:0123456789abcdef:\"},{\"n\":\"url\",\"vs\":\"https://123.123.123.345/f/v1/12345678-1234-5678-1234-567812345678\"},{\"n\":\"token\",\"vs\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}]"
 #define VALID_FIRMWARE_MESSAGE3 "HTTP/1.1 200 OK\r\nDate: Mon, 11 Jan 2021 15:15:22 GMT\r\nServer: Apache/2\r\nContent-Length: 305\r\nVary: Accept-Encoding,User-Agent\r\nContent-Type: text/plain\r\n\r\n[{\"bn\":\"urn:dev:IMEI:0123456789abcdef:\"},{\"n\":\"url\",\"vs\":\"http://123.123.123.567:81/f/v1/12345678-1234-5678-1234-567812345678\"},{\"n\":\"token\",\"vs\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}]"
 #define VALID_MESSAGE "HTTP/1.1 200 OK\r\nDate: Mon, 11 Jan 2021 15:15:22 GMT\r\nServer: Apache/2\r\nContent-Length: 301\r\nVary: Accept-Encoding,User-Agent\r\nContent-Type: text/plain\r\n\r\n[{\"bn\":\"urn:dev:IMEI:0123456789abcdef:\"},{\"n\":\"url\",\"vs\":\"http://123.123.123.123/f/v1/12345678-1234-5678-1234-567812345678\"},{\"n\":\"tokeen\",\"vs\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c\"}]"
-#define VALID_RESPONSE "HTTP/1.1 206 Partial Content\r\nDate: Wed, 13 Jan 2021 15:17:58 GMT\r\nServer: Apache/2\r\nLast-Modified: Sat, 14 Nov 2020 10:26:19 GMT\r\nAccept-Ranges: bytes\r\nContent-Length: 101\r\nContent-Range: bytes 0-100/1544736\r\nContent-Type: text/plain\r\n\r\nMon, 06 Jan 2020 12:43:00 +0100\r\n{\"PATH\":\"\/usr\/local\/bin:\/usr\/bin:\/bin\",\"TEMP\":\"\/tmp\",\"TMP\":\"\/"
+#define VALID_RESPONSE "HTTP/1.1 206 Partial Content\r\nDate: Wed, 13 Jan 2021 15:17:58 GMT\r\nServer: Apache/2\r\nLast-Modified: Sat, 14 Nov 2020 10:26:19 GMT\r\nAccept-Ranges: bytes\r\nContent-Length: 101\r\nContent-Range: bytes 0-100/1544736\r\nContent-Type: text/plain\r\n\r\nMon, 06 Jan 2020 12:43:00 +0100\r\n{\"PATH\":\"/usr/local/bin:/usr/bin:/bin\",\"TEMP\":\"/tmp\",\"TMP\":\"/"
 
 TEST(thingsml_firmware, is_firmware_message) {
-    char * message = VALID_FIRMWARE_MESSAGE;
+    const char * message = VALID_FIRMWARE_MESSAGE;
     EXPECT_TRUE(ThingsML::HttpFirmwareDownload::isFirmwareMessage(message, strlen(message)));
     message = VALID_MESSAGE;
     EXPECT_FALSE(ThingsML::HttpFirmwareDownload::isFirmwareMessage(message, strlen(message)));
 }
 
 TEST(thingsml_firmware, parse_firmware_message) {
-    char * message = VALID_FIRMWARE_MESSAGE;
+    const char * message = VALID_FIRMWARE_MESSAGE;
     ThingsML::HttpFirmwareDownload download("urn:dev:IMEI:0123456789abcdef:");
     download.parseFirmwareMessage(message, strlen(message));
 }
 
 TEST(thingsml_firmware, generate_firmware_request) {
-    char * message = VALID_FIRMWARE_MESSAGE;
+    const char * message = VALID_FIRMWARE_MESSAGE;
     ThingsML::HttpFirmwareDownload download("urn:dev:IMEI:0123456789abcdef:");
     download.parseFirmwareMessage(message, strlen(message));
 

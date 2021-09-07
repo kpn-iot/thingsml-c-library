@@ -1,8 +1,6 @@
 
 #include "base64.h"
 
-#ifdef THINGSML_LOCAL_BASE64
-
 /*
 Copyright (C) 2013 Adam Rudd
 
@@ -165,5 +163,3 @@ int base64_dec_len(char *input, int inputLen) {
 
     return ((6 * inputLen) / 8) - numEq;
 }
-
-#endif

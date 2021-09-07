@@ -11,9 +11,9 @@
  * pack (document) without base values
  */
 #include <math.h>
-
+#include "defaults.h"
 #include "../cbor/cbor.h"
-#include "senml_JsonStreamingParser.h"
+#include "senml_jsonstreamingparser.h"
 #include "senml_base.h"
 #include "senml_cbor_parser.h"
 #include "senml_helpers.h"
@@ -21,7 +21,7 @@
 #include "senml_logging.h"
 #include "senml_pack.h"
 #include <string.h>
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
 #include <avr/pgmspace.h>
 #endif
 
@@ -103,7 +103,7 @@ int SenMLPack::fieldsToCbor() {
     }
     if (this->_bu) {
         res += cbor_serialize_int(SENML_CBOR_BU_LABEL);
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
         strcpy_P(pgmBuff, (char *)pgm_read_word(&(senml_units_names[this->_bu])));
         res += cbor_serialize_unicode_string(pgmBuff);
 #else

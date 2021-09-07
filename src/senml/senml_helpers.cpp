@@ -15,7 +15,7 @@
 #include <string.h>
 
 #ifdef ESP32
-#include <arduino.h> //needed for sprintf
+#include <Arduino.h> //needed for sprintf
 #endif
 
 #ifdef ARDUINO
@@ -103,10 +103,7 @@ int printDouble(double f, unsigned int digits) {
 }
 
 int printBinaryAsBase64(const unsigned char *data, unsigned int length) {
-#ifdef ESP32
-    String encoded = base64::encode((uint8_t *)data, length);
-    return printText(encoded.c_str(), encoded.length());
-#else
+
     int encodedLen = base64_enc_len(length);
     char *encoded = (char *)malloc(encodedLen);
 
@@ -115,14 +112,13 @@ int printBinaryAsBase64(const unsigned char *data, unsigned int length) {
     printText(encoded, encodedLen);
     free(encoded);
     return encodedLen;
-#endif
 }
 
 int printUnit(SenMLUnit unit) {
     if (unit == SENML_UNIT_NONE) {
         return 0;
     }
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
     strcpy_P(pgmBuff, (char *)pgm_read_word(&(senml_units_names[unit])));
     return printText(pgmBuff, strlen(pgmBuff));
 #else
@@ -176,7 +172,7 @@ int printText(const char *const value, int length) {
     return length;
 }
 
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
 int printText(const __FlashStringHelper *input, int length) {
     PGM_P value = reinterpret_cast<PGM_P>(input);
     if (_streamCtx->dataAsBlob) {

@@ -12,7 +12,7 @@
  */
 
 #include "senml_json_parser.h"
-#include "senml_JsonListener.h"
+#include "senml_jsonlistener.h"
 #include "senml_helpers.h"
 #include <string.h>
 

@@ -19,7 +19,7 @@
 #include <math.h>
 
 #ifndef SENML_MAX_DOUBLE_PRECISION
-#define SENML_MAX_DOUBLE_PRECISION 4
+#define SENML_MAX_DOUBLE_PRECISION 8
 #endif // !SENML_MAX_DOUBLE_PRECISION
 
 /**
@@ -121,7 +121,7 @@ int printText(const char *value, int length);
  */
 bool canPrint(int length);
 
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
 int printText(const __FlashStringHelper *value, int length);
 #else
 #define F(str) str

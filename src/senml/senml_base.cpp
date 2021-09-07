@@ -14,7 +14,7 @@
 #include "senml_base.h"
 #include "senml_pack.h"
 
-SenMLBase::SenMLBase() : _prev(NULL), _next(NULL) {
+SenMLBase::SenMLBase() : _next(NULL), _prev(NULL) {
 }
 
 SenMLBase::~SenMLBase() {

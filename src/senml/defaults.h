@@ -15,16 +15,33 @@
 #ifndef THINGS_SENML_DEFAULTS
 #define THINGS_SENML_DEFAULTS
 
+// For low ram devices (less then 4KiB, this saves about 400 bytes)
+#ifndef THINGSML_LOW_RAM_DEVICE
+    // See http://electronics4dogs.blogspot.com/2011/01/arduino-predefined-constants.html
+    #if defined(ARDUINO) && defined(__AVR_ATmega168__) // Arduino Decimilia and older
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #elif defined(ARDUINO) && defined(__AVR_ATmega32U4__) // Arduino Leonardo
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #elif defined(ARDUINO) && defined(__AVR_ATmega328P__) // Arduino Duemilanove and Uno
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #endif
+#endif
+
 #ifdef __MBED__
+
 #include "mbed.h"
 #include "sstream"
 #include <string>
 using namespace std;
 #define String string
+
 #elif defined(ARDUINO)
+
 #include "Arduino.h"
-#include <stream.h>
+#include <Stream.h>
+
 #else
+
 #include <string>
 using namespace std;
 #define String string

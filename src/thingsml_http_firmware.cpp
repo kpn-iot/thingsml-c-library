@@ -27,7 +27,6 @@ static String makeString(const char * buff, int subLength) {
 }
 
 static int hexToInt(char c) {
-    int value = 0;
     if(c >= '0' && c <= '9')
         return  (c - '0');
     else if (c >= 'A' && c <= 'F') 
@@ -41,7 +40,7 @@ static int hexToInt(char c) {
 namespace ThingsML {
 
 
-    size_t HttpFirmwareDownload::getFirmwarePartRequest(int partIndex, char buffer[], int bufferLength,char host[]) {
+    size_t HttpFirmwareDownload::getFirmwarePartRequest(int partIndex, char buffer[], int bufferLength, const char host[]) {
         if (_token.get() == nullptr || _url.get() == nullptr) {
             return -1;
         }
@@ -110,7 +109,7 @@ namespace ThingsML {
         return total;
     }
 
-    bool HttpFirmwareDownload::parseFirmwareMessage(char message[], int messageLength) {
+    bool HttpFirmwareDownload::parseFirmwareMessage(const char message[], int messageLength) {
         _url.set(nullptr);
         _token.set(nullptr);
         if (!isFirmwareMessage(message, messageLength)) {
@@ -184,7 +183,7 @@ namespace ThingsML {
         return strstr(_url.get(), "https://") != nullptr ? 443 : 80;
     }
 
-    bool HttpFirmwareDownload::isFirmwareMessage(char message[], int messageLength) {
+    bool HttpFirmwareDownload::isFirmwareMessage(const char message[], int messageLength) {
         int start = getHttpBodyStart(message, messageLength);
         if (start >= (messageLength - 2)) { // Body not long enough to be valid
             return false;
@@ -201,7 +200,7 @@ namespace ThingsML {
         return true;
     }
 
-    int HttpFirmwareDownload::getTotalSizeFromResponse(char message[], int messageLength) {
+    int HttpFirmwareDownload::getTotalSizeFromResponse(const char message[], int messageLength) {
         const char * ContentRange = "Content-Range:bytes";
         const int length = 19;
         int pos = 0;
@@ -252,7 +251,7 @@ namespace ThingsML {
     }
 
 
-    uint32_t HttpFirmwareDownload::getCRC32FromResponse(char message[], int messageLength) {
+    uint32_t HttpFirmwareDownload::getCRC32FromResponse(const char message[], int messageLength) {
         const char * ContentRange = "Digest:crc32=";
         const int length = 13;
         int pos = 0;
@@ -285,7 +284,7 @@ namespace ThingsML {
     /*
         From https://create.stephan-brumme.com/crc32/#tableless
     */
-    uint32_t HttpFirmwareDownload::calculateCRC32FromBody(char body[], int bodyLength) {
+    uint32_t HttpFirmwareDownload::calculateCRC32FromBody(const char body[], int bodyLength) {
         uint32_t crc = 0xFFFFFFFF;
         const uint8_t* current = (const uint8_t*) body;
         while (bodyLength-- != 0)

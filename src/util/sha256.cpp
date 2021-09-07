@@ -16,7 +16,19 @@
 #include "sha256.h"
 #include <string.h>
 
-#ifdef ARDUINO
+// For low ram devices (less then 4KB, this saves about 400 bytes)
+#ifndef THINGSML_LOW_RAM_DEVICE
+    // See http://electronics4dogs.blogspot.com/2011/01/arduino-predefined-constants.html
+    #if defined(ARDUINO) && defined(__AVR_ATmega168__) // Arduino Decimilia and older
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #elif defined(ARDUINO) && defined(__AVR_ATmega32U4__) // Arduino Leonardo
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #elif defined(ARDUINO) && defined(__AVR_ATmega328P__) // Arduino Duemilanove and Uno
+        #define THINGSML_LOW_RAM_DEVICE 1
+    #endif
+#endif
+
+#ifdef THINGSML_LOW_RAM_DEVICE
 #include <avr/pgmspace.h>
 #endif
 
@@ -24,7 +36,7 @@
 #define HMAC_OPAD 0x5c
 
 const uint32_t SHA256_K[]
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
     PROGMEM
 #endif
     = {0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
@@ -37,7 +49,7 @@ const uint32_t SHA256_K[]
        0x748f82ee, 0x78a5636f, 0x84c87814, 0x8cc70208, 0x90befffa, 0xa4506ceb, 0xbef9a3f7, 0xc67178f2};
 
 const uint8_t SHA256_INIT_STATE[]
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
     PROGMEM
 #endif
     = {
@@ -65,7 +77,7 @@ void Sha256::hash(const uint8_t in[], int inLength, uint8_t out[], int outLength
 }
 
 void Sha256::init(void) {
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
     memcpy_P(state.b, SHA256_INIT_STATE, 32);
 #else
     memcpy(state.b, SHA256_INIT_STATE, 32);
@@ -204,7 +216,7 @@ void Sha256::hashBlock() {
         t1 = h;
         t1 += ror32(e, 6) ^ ror32(e, 11) ^ ror32(e, 25); // ∑1(e)
         t1 += g ^ (e & (g ^ f));                         // Ch(e,f,g)
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
         t1 += pgm_read_dword(SHA256_K + i); // Ki
 #else
         t1 += SHA256_K[i]; // Ki

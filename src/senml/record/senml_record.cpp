@@ -18,7 +18,7 @@
 #include "../senml_pack.h"
 #include <math.h>
 #include <string.h>
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
 #include <avr/pgmspace.h>
 #endif
 
@@ -162,7 +162,7 @@ int SenMLRecord::fieldsToCbor() {
     }
     if (this->_unit != SENML_UNIT_NONE) {
         res += cbor_serialize_int(SENML_CBOR_U_LABEL);
-#ifdef ARDUINO
+#ifdef THINGSML_LOW_RAM_DEVICE
         // char pgmBuff[9] = {0};
         strcpy_P(pgmBuff, (char *)pgm_read_word(&(senml_units_names[this->_unit])));
         res += cbor_serialize_unicode_string(pgmBuff);

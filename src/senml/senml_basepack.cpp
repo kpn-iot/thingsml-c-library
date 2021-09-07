@@ -13,7 +13,7 @@
 #include <math.h>
 
 #include "../cbor/cbor.h"
-#include "senml_JsonStreamingParser.h"
+#include "senml_jsonstreamingparser.h"
 #include "senml_basepack.h"
 #include "senml_cbor_parser.h"
 #include "senml_helpers.h"

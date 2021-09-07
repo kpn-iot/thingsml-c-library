@@ -201,11 +201,11 @@ class SenMLRecord : public SenMLBase {
     int getFieldLength();
 
   private:
+    ThingsMLMeasurementIndex _index;
+    const char *_name = NULL;
+    SenMLUnit _unit;
     double _time;
     double _updateTime;
-    const char *_name = NULL;
-    ThingsMLMeasurementIndex _index;
-    SenMLUnit _unit;
 };
 
 #endif // SENMLRECORD

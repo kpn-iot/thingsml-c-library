@@ -1,24 +1,6 @@
 #ifndef THINGS_SENML_BASE64
 #define THINGS_SENML_BASE64
 
-#ifdef ESP32
-
-extern "C" {
-#include "libb64/cdecode.h"
-}
-int base64_dec_len(char *input, int inputLen) {
-    int i = 0;
-    int numEq = 0;
-    for (i = inputLen - 1; input[i] == '='; i--) {
-        numEq++;
-    }
-
-    return ((6 * inputLen) / 8) - numEq;
-}
-
-#else
-
-#define THINGSML_LOCAL_BASE64
 /*Copyright (C) 2013 Adam Rudd
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
@@ -39,7 +21,5 @@ int base64_decode(char *output, char *input, int inputLen);
 
 int base64_enc_len(int plainLen);
 int base64_dec_len(char *input, int inputLen);
-
-#endif
 
 #endif

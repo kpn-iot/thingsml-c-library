@@ -99,7 +99,7 @@ inline uint16_t half_float_to_binary(float val) {
     union u {
         uint32_t ui;
         float f;
-    } Data;
+    };
     u d;
     d.f = val;
     /*
@@ -151,7 +151,7 @@ inline float binary_to_half_float(uint16_t val) {
     union u {
         uint32_t ui;
         float f;
-    } Data;
+    };
     u d;
     d.ui = t1;
     return d.f;
