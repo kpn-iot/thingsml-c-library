@@ -110,11 +110,13 @@ namespace ThingsML {
     }
 
     bool HttpFirmwareDownload::parseFirmwareMessage(const char message[], int messageLength) {
-        _url.set(nullptr);
-        _token.set(nullptr);
         if (!isFirmwareMessage(message, messageLength)) {
             return false;
         }
+        
+        _url.set(nullptr);
+        _token.set(nullptr);
+        
         int start = getHttpBodyStart(message, messageLength);
         _firmwareMessage.fromJson(&message[start]);
 
