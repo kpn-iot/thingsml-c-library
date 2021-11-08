@@ -53,9 +53,9 @@
 #define CONSOLE_STREAM   SerialUSB
 #define MODEM_STREAM     Serial1
 
-#define CURRENT_OPERATOR AUTOMATIC_OPERATOR
+#define CURRENT_OPERATOR SODAQ_R4X_AUTOMATIC_OPERATOR
 #define CURRENT_URAT     SODAQ_R4X_LTEM_URAT
-#define CURRENT_MNO_PROFILE MNOProfiles::STANDARD_EUROPE
+#define CURRENT_MNO_PROFILE MNOProfiles::SIM_ICCID // for KPN
 
 static Sodaq_R4X r4x;
 static Sodaq_LSM303AGR AccMeter;
@@ -94,10 +94,10 @@ void setup() {
   }
   CONSOLE_STREAM.begin(115200);
   CONSOLE_STREAM.println("Console open");
-  MODEM_STREAM.begin(r4x.getDefaultBaudrate());
+  //MODEM_STREAM.begin(115200); not used
 
   r4x.setDiag(CONSOLE_STREAM);
-  r4x.init(&saraR4xxOnOff, MODEM_STREAM);
+  r4x.init(&saraR4xxOnOff, MODEM_STREAM, 115200);
 }
 
 void loop() {
