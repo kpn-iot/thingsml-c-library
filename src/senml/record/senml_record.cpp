@@ -42,20 +42,6 @@ bool SenMLRecord::setTime(double value, bool absolute) {
 }
 
 bool SenMLRecord::setUpdateTime(double value, bool absolute) {
-    SenMLBase *root = this->getRoot();
-    if (absolute) {
-        if (root) {
-            if (root->isPack()) {
-                double baseTime = ((SenMLPack *)root)->getBaseTime();
-                if (!isnan(baseTime))
-                    value -= baseTime;
-            } else {
-                return false;
-            }
-        }
-    } else if (root == NULL) {
-        return false;
-    }
     this->_updateTime = value;
     return true;
 }
@@ -75,12 +61,6 @@ void SenMLRecord::adjustToBaseTime(double prev, double time) {
         if (!isnan(time)) {
             this->_time -= time;
         }
-    }
-    if (!isnan(prev)) {
-        this->_updateTime += prev;
-    }
-    if (!isnan(time)) {
-        this->_updateTime -= time;
     }
 }
 

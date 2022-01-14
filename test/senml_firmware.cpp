@@ -83,6 +83,8 @@ TEST(thingsml_firmware, get_host) {
 TEST(thingsml_firmware, get_port) {
     ThingsML::HttpFirmwareDownload download("urn:dev:IMEI:0123456789abcdef:");
     
+    EXPECT_EQ(0, download.getPort());
+
     download.parseFirmwareMessage(VALID_FIRMWARE_MESSAGE, strlen(VALID_FIRMWARE_MESSAGE));
     EXPECT_EQ(80, download.getPort());
     
@@ -93,7 +95,7 @@ TEST(thingsml_firmware, get_port) {
     EXPECT_EQ(81, download.getPort());
 
     download.parseFirmwareMessage(VALID_MESSAGE, strlen(VALID_MESSAGE));
-    EXPECT_EQ(0, download.getPort());
+    EXPECT_EQ(81, download.getPort()); // Should not reset old information
 }
 
 #define BODY "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent et pharetra velit. Donec sed magna dui. Etiam augue dui, accumsan ac lacus vel, sollicitudin finibus augue. Phasellus fermentum sem mauris, ut feugiat lorem mollis eu. In hac habitasse plate"

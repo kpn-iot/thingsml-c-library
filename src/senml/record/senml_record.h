@@ -88,6 +88,17 @@ class SenMLRecord : public SenMLBase {
     bool setTime(double value, bool absolute = true);
 
     /**
+     * set the time, expressed as a unix epoch time.
+     * This assigns the value directly without taking the parent senml pack into consideration.
+     * Use this only when you are calculating the values in a way that is not compatible with the functionality of setTime();
+     * See [base fields](https://tools.ietf.org/html/draft-ietf-core-senml-13#section-4.1) for more info on the time value. 
+     * @param value the unix epoch time value to assign to the record
+     */
+    void setTimeDirect(double value) {
+        this->_time = value;
+    }
+
+    /**
      * Get the name of the record.
      * @returns the name of the record as an immutable string. Don't delete this pointer, it refers to the
      *          internal buffer of the object and is managed by the record.
@@ -121,17 +132,14 @@ class SenMLRecord : public SenMLBase {
 
     /**
      * Assign a timestamp to the record at which it is expected to update the value.
-     * when absolute is true (default behaviour), the time value will be made relative to the
-     * base time of the pack object, if it has a base time.
      * See [base fields](https://tools.ietf.org/html/draft-ietf-core-senml-13#section-4.1) for more info on the time
-     * value. Possible reasons for failure:
-     *  - if there is a root object, but it is not a SenMLPack
-     *  - if absolute is false, but there is no parent SenMLPack object.
+     * 
+     * Note: previously update time was interpreted as being relative, however this is not in line with the spec.
+     * the optional paramter absolute will now be ignored and true will always be returned.
+     *
      * @param value the unix epoch update time value to assign to the record
-     * @param absolute When true (default), the value will be interpreted as an absolute time stamp. If there
-     *                 is a parent SenMLPack, the value will be made relative to the pack's base time, if there is any.
-     *                 When false, no conversion is done, but a parent SenMLPack has to be present.
-     * @returns true upon success, otherwise false.
+     * @param absolute ignored. previously updatetime was interpreted as being relative to basetime, this is not in line with the spec however.
+     * @returns always returns true
      */
     bool setUpdateTime(double value, bool absolute = true);
 

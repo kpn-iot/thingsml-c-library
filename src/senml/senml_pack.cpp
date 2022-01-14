@@ -39,12 +39,16 @@ void SenMLPack::setBaseUnit(SenMLUnit unit) {
 
 void SenMLPack::setBaseTime(double time) {
     double prev = this->_bt;
-    this->_bt = time; // set before asking children -> could be better to do it afterwards?
+    this->setBaseTimeSilently(time);
     SenMLBase *item = this->getFirst();
     while (item) {
         item->adjustToBaseTime(prev, time);
         item = item->getNext();
     }
+}
+
+void SenMLPack::setBaseTimeSilently(double time) {
+    this->_bt = time;
 }
 
 int SenMLPack::getFieldLength() {

@@ -473,3 +473,45 @@ TEST(senml, proper_zero_terminate_cbor) {
     EXPECT_EQ(10, len);
     EXPECT_STREQ("81A322F93C001737020A", output);
 }
+
+TEST(senml, count_pack) {
+    SenMLPack doc;
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    SenMLIntRecord intrec2(THINGSML_TEMPERATURE);
+
+    doc.add(intrec);
+    doc.add(intrec2);
+
+    EXPECT_EQ(2, doc.getCount());
+}
+
+
+TEST(senml, count_pack_nested) {
+    SenMLPack doc;
+    SenMLPack doc2;
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    SenMLIntRecord intrec2(THINGSML_TEMPERATURE);
+    SenMLIntRecord intrec3(THINGSML_TEMPERATURE);
+    SenMLIntRecord intrec4(THINGSML_TEMPERATURE);
+
+    doc.add(intrec);
+    doc.add(intrec2);
+    doc.add(doc2);
+    doc2.add(intrec3);
+    doc2.add(intrec4);
+
+    EXPECT_EQ(4, doc.getCount());
+}
+
+TEST(senml, count_pack_nested_empty) {
+    SenMLPack doc;
+    SenMLPack doc2;
+    SenMLIntRecord intrec(THINGSML_TEMPERATURE);
+    SenMLIntRecord intrec2(THINGSML_TEMPERATURE);
+
+    doc.add(intrec);
+    doc.add(intrec2);
+    doc.add(doc2);
+
+    EXPECT_EQ(3, doc.getCount());
+}

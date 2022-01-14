@@ -235,6 +235,14 @@ class SenMLPack : public SenMLBasePack {
     void setBaseTime(double time);
 
     /**
+     * Set the base time without adjusting all it's records.
+     * see the spec on [basefields](https://tools.ietf.org/html/draft-ietf-core-senml-13#section-4.1) for more info.
+     * @param time the value to use as base time. set bt to NaN if the field should not be included in the output.
+     * @returns none
+     */
+    void setBaseTimeSilently(double time);
+
+    /**
      * Get the base time. see the spec on [base
      * fields](https://tools.ietf.org/html/draft-ietf-core-senml-13#section-4.1) for more info.
      * @returns a double value that is used as the default unit for records that don't define a unit of their own.

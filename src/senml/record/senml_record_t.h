@@ -111,6 +111,10 @@ template <class T> class SenMLRecordTemplate : public SenMLRecord {
     {
         this->_value = value;
         this->_valAsSum = asSum;
+        // Do not remove time when none is provided
+        if (isnan(time)) {
+            return true;
+        }
         return this->setTime(time);
     };
 

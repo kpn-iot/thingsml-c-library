@@ -67,6 +67,21 @@ bool SenMLBasePack::clear() {
     return true;
 }
 
+int SenMLBasePack::getCount() {
+    SenMLBase * item  = this->_start;
+    int cnt = 0;
+    while(item) {
+        if (item->isPack()) {
+            cnt += ((SenMLBasePack *) item)->getCount();
+        } else {
+            cnt++;
+        }
+        item = item->getNext();
+        
+    }
+    return cnt == 0 ? 1 : cnt; // If the pack has no entries, it will still produce 1 entry, otherwise the first entry is merged with pack information.
+}
+
 void SenMLBasePack::fromJson(Stream &source, SenMLStreamMethod format) {
     JsonStreamingParser parser;
     SenMLJsonListener listener(this);

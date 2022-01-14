@@ -151,6 +151,11 @@ class SenMLBasePack : public SenMLBase {
     };
 
     /**
+     * @returns the number of items this pack contains.
+     */
+    virtual int getCount();
+
+    /**
      * renders all the fields to json, without the starting and ending brackets.
      * Inheriters can extend this function if they want to add extra fields to the json output
      * note: this is public so that custom implementations for the record object can use other objects
