@@ -36,14 +36,14 @@ int SenMLIntPack::fieldsToJson() {
     val = this->getBaseValue();
     if (val != 0) {
         res += printText(F(",\"bv\":"), 6);
-        strVal = val;
+        strVal = String(val);
         res += printText(strVal.c_str(), strVal.length());
     }
 
     val = this->getBaseSum();
     if (val != 0) {
         res += printText(F(",\"bs\":"), 6);
-        strVal = val;
+        strVal = String(val);
         res += printText(strVal.c_str(), strVal.length());
     }
     return res;
