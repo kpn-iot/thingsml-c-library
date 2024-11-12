@@ -45,7 +45,7 @@ NB nbAccess(true);  //include a 'true' parameter to enable debug
 void setup() {
   pinMode(LED_BUILTIN, OUTPUT);
   Serial.begin(9600);
-  while (!Serial);
+  //while (!Serial);
   TempZero.init();
   device.add(temperature);
   debugln("Starting Arduino MKR NB 1500");
