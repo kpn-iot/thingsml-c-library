@@ -32,8 +32,8 @@
 #include "mbed.h"
 #include "sstream"
 #include <string>
-using namespace std;
-#define String string
+
+#define String std::string
 
 #elif defined(ARDUINO)
 
@@ -43,8 +43,8 @@ using namespace std;
 #else
 
 #include <string>
-using namespace std;
-#define String string
+
+#define String std::string
 
 #include <iostream>
 class Stream {
