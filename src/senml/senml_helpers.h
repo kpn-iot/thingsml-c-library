@@ -16,6 +16,7 @@
 
 #include "defaults.h"
 #include "senml_enums.h"
+#include <stdint.h>
 #include <math.h>
 
 #ifndef SENML_MAX_DOUBLE_PRECISION
