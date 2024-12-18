@@ -1,17 +1,13 @@
 {
     "name": "ThingsML",
-    "version": "1.4.0",
+    "version": "1.4.1",
     "description": "Thingsml Encoder/Decoder, for use in LoraWAN and M2M networks",
     "keywords": "LoRa,ThingsML,SenML,KPN,IoT,LoRaWAN",
     "authors": [
         {
-            "name": "Joseph Verburg",
-            "email": "joseph.verburg@kpn.com",
+            "name": "KPN IOT",
+            "email": "",
             "maintainer": true
-        },
-        {
-            "name": "Paul Marcelis",
-            "email": "paul.marcelis@kpn.com"
         }
     ],
     "repository": {
